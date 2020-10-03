@@ -12,18 +12,7 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
-    axios({
-      url : `http://worldtimeapi.org/api/timezone/America/Toronto`,
-      params: {
-
-      }
-
-    }).then(response => {
-      // console.log(response);
-    })
-  }
-
+ 
 
   render() {
     return (
