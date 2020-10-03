@@ -11,6 +11,7 @@ export default class UserInput extends Component {
             duration: 0,
             endTime: "",
             etcList: [],
+            timeZone: "",
         }
     }
 
@@ -40,7 +41,6 @@ export default class UserInput extends Component {
     etcDropDownLoop = () =>  {
         
         const arr = this.state.etcList.map((timeZoneName) => {
-            console.log(timeZoneName);
             return (<option value={timeZoneName}> {timeZoneName} </option >)
         })
 
@@ -49,42 +49,34 @@ export default class UserInput extends Component {
 
     }
 
-
     addOrSubtract = (change) => {
         const duration = this.state.duration + change;
         if (duration < 5 && duration > 0) this.setState(prevState => ({
-          duration: prevState.duration + change
+          duration: prevState.duration + change,
         }))
     }
 
-    handleChange = (e) => {
-        
-        const duration =  e.target.value;
-        this.setState({duration: duration, endTime: this.state.initialTime + duration })
-
-    }
 
     render() {
         return (
             <div>
                 <form action="">
                     <label htmlFor="">initialTime</label>
-                    <select  value={this.state.initialTime} onChange={(e) => this.setState({initialTime: e.target.value })}  name="" id="">
+                    <select value={this.state.initialTime} onChange={(e) => this.setState({initialTime: e.target.value })}  name="" id="">
                         {this.timeDropDownLoop(8,19)}
                     </select>
 
                     <label htmlFor="">duration</label>
-                        <i class="fas fa-minus" onClick={() => this.addOrSubtract(-1)}></i>
+                        <i className="fas fa-minus" onClick={() => this.addOrSubtract(-1)}></i>
                         <span>{this.state.duration}</span>
-                        <i class="fas fa-plus" onClick={() => this.addOrSubtract(+1)}></i>
+                        <i className="fas fa-plus" onClick={() => this.addOrSubtract(+1)}></i>
 
                     <label htmlFor=""></label>
-                    <select name="" id="">
+                    <select value={this.state.timeZone} name="" id="" onChange={(e) => this.setState({timeZone: e.target.value })}>
                         {this.etcDropDownLoop()}
                     </select>
                 </form>
             </div>
         );
     }
-
 }
