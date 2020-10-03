@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './UserInput.css';
 
 
 export default class UserInput extends Component {
@@ -31,7 +32,7 @@ export default class UserInput extends Component {
         let arr = [];
         for (let i = start; i < end; i++) {
             let time = i;
-            if (start === 8 && time > 12) time -= 12;
+            if (start === 8  && time > 12) time -= 12;
             arr.push(<option value={i}> {time} </option>)
         }
 
@@ -62,22 +63,26 @@ export default class UserInput extends Component {
         return (
             <div>
                 <form action="">
-                    <label htmlFor="">initialTime</label>
+                    <label htmlFor="">Meeting Start</label>
                     <select value={this.state.initialTime} onChange={(e) => this.setState({ initialTime: e.target.value })} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
 
-                    <label htmlFor="">duration</label>
+                    <label htmlFor="">Duration Meeting</label>
                     <i className="fas fa-minus" onClick={() => this.addOrSubtract(-1)}></i>
                     <span>{this.state.duration}</span>
                     <i className="fas fa-plus" onClick={() => this.addOrSubtract(+1)}></i>
 
-                    <label htmlFor=""></label>
-                    <select value={this.state.timeZone} name="" id="" onChange={(e) => this.setState({ timeZone: e.target.value })}>
-                        {this.etcDropDownLoop()}
-                    </select>
+                    <div className="gtm">
+                        <h2>Select Time Zone:</h2>
+                        <select value={this.state.timeZone} name="" id="" onChange={(e) => this.setState({ timeZone: e.target.value })}>
+                            {this.etcDropDownLoop()}
+                        </select>
+                    </div>
+                    <button type="submit" value="Submit">Submit</button>
                 </form>
             </div>
         );
     }
 }
+
