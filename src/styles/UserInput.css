@@ -6,11 +6,10 @@ select {
 
 i {
     margin:0 5px;
+    cursor: pointer;
 }
-
-.gtm {
-    margin-top:20px;
-    display:flex;
+i:focus {
+    outline-offset: 3px;
 }
 
 h2 {

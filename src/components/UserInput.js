@@ -98,10 +98,13 @@ export default class UserInput extends Component {
 
                     <label htmlFor="meetingDuration">Duration Meeting</label>
                     <span className="srOnly">subtract meeting time</span>
-                    <i className="fas fa-minus" aria-hidden="true" onClick={() => this.addOrSubtract(-1)}></i>
-                    <span id="meetingDuration">{this.state.duration}</span>
-                    <span className="srOnly">add meeting time</span>
-                    <i className="fas fa-plus" aria-hidden="true" onClick={() => this.addOrSubtract(+1)}></i>
+                        <i className="fas fa-minus" aria-hidden="true" tabIndex={0} onClick={() => this.addOrSubtract(-1)}></i>
+
+                        <span>{this.state.duration}</span>
+
+                        <span className="srOnly">add meeting time</span>
+                        <i className="fas fa-plus" aria-hidden="true" tabIndex={0} onClick={() => this.addOrSubtract(+1)}></i>
+                    </fieldset>
 
                     {this.addNewLocation()}
 
