@@ -32,19 +32,23 @@ export default class App extends Component {
   
   render() {
     return (
-     <div>
+      <div>
         <div className="App wrapper">
           <header>
             <h1>What time is it?</h1>
           </header>
           <div className="flex">
             <div>
+<<<<<<< HEAD
               <UserInput 
                   etcList={this.state.etcList}
               />
               <p>results</p>
               <p>results</p>
               <p>results</p>
+=======
+              <UserInput />
+>>>>>>> master
             </div>
             <MeetingTime />
           </div>
