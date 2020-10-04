@@ -39,16 +39,7 @@ export default class App extends Component {
           </header>
           <div className="flex">
             <div>
-<<<<<<< HEAD
-              <UserInput 
-                  etcList={this.state.etcList}
-              />
-              <p>results</p>
-              <p>results</p>
-              <p>results</p>
-=======
               <UserInput />
->>>>>>> master
             </div>
             <MeetingTime />
           </div>
