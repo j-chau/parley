@@ -1,0 +1,23 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  background-color: var(--turquoise);
+  padding: 10px;
+
+  
+}
+
+.grid-item p {
+    width: auto;
+    text-align: center;
+}
+
+.item{
+  background-color: white;
+   
+}
+
+h3 {
+  margin-top:15px;
+  text-align: center;
+}
