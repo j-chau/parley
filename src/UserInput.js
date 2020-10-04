@@ -55,6 +55,7 @@ export default class UserInput extends Component {
         // await all the promises in the promiseLoop array and when resolved make equal to newArr
         newArr = await Promise.all(promiseLoop);
         // update state with all resolved promises in newArr to timeZoneList
+        console.log('App is Ready!')
         this.setState({
             timeZoneList: newArr,
         })
