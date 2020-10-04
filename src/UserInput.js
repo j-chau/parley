@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './UserInput.css';
 
+import AddLocation from './AddLocation.js';
 
 export default class UserInput extends Component {
 
@@ -12,42 +13,37 @@ export default class UserInput extends Component {
             duration: 0,
             endTime: "",
             etcList: [],
-            timeZone: "",
+            timeZone: {},
+            numLocation: 1,
         }
     }
 
     componentDidMount() {
         axios({
             url: `http://worldtimeapi.org/api/timezone/Etc`,
-
         }).then(response => {
             this.setState({
                 etcList: response.data,
             })
         })
-
     }
 
     timeDropDownLoop = (start, end) => {
-        let arr = [];
+        let meetingTimeArr = [];
         for (let i = start; i < end; i++) {
             let time = i;
-            if (start === 8  && time > 12) time -= 12;
-            arr.push(<option value={i}> {time} </option>)
+            if (start === 8 && time > 12) time -= 12;
+            meetingTimeArr.push(<option value={i} key={i}> {time} </option>)
         }
-
-        return arr;
+        return meetingTimeArr;
     }
 
     etcDropDownLoop = () => {
-
-        const arr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName}> {timeZoneName} </option >)
+        const etcArr = this.state.etcList.map((timeZoneName) => {
+            return (<option value={timeZoneName} key={timeZoneName}>{timeZoneName}</option >)
         })
-
-        arr.pop();
-        return arr;
-
+        etcArr.pop();
+        return etcArr;
     }
 
     addOrSubtract = (change) => {
@@ -58,6 +54,38 @@ export default class UserInput extends Component {
         }))
     }
 
+    addNewLocation = () => {
+        let locationArr = [];
+        for (let i = 0; i < this.state.numLocation; i++) {
+            locationArr.push(
+                <AddLocation
+                    id={i + 1}
+                    key={i + 1}
+                    timeZoneList={this.etcDropDownLoop()}
+                    onSelect={(e) => this.saveTimeZone(e.target.value, e.target.name)} />
+            )
+        }
+        return locationArr;
+    }
+
+    saveTimeZone = (value, name) => {
+        const copyTimeZone = { ...this.state.timeZone };
+        const keyName = "location" + name;
+        copyTimeZone[keyName] = value;
+        this.setState({
+            timeZone: copyTimeZone
+        })
+    }
+
+    handleClick = (e) => {
+        e.preventDefault();
+        if (this.state.numLocation < 3) {
+            this.setState(prevState => ({
+                numLocation: prevState.numLocation + 1
+            }))
+            this.addNewLocation();
+        } else console.log("max number reached");
+    }
 
     render() {
         return (
@@ -75,13 +103,10 @@ export default class UserInput extends Component {
                     <span className="srOnly">add meeting time</span>
                     <i className="fas fa-plus" aria-hidden="true" onClick={() => this.addOrSubtract(+1)}></i>
 
-                    <div className="gtm">
-                        <h2>Select Time Zone:</h2>
-                        <select value={this.state.timeZone} name="" id="" onChange={(e) => this.setState({ timeZone: e.target.value })}>
-                            {this.etcDropDownLoop()}
-                        </select>
-                    </div>
-                    <button type="submit" value="Submit">Submit</button>
+                    {this.addNewLocation()}
+
+                    <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
+
                 </form>
             </div>
         );

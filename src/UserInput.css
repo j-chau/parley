@@ -6,14 +6,11 @@ select {
 
 i {
     margin:0 5px;
-
 }
 
 .gtm {
- margin-top:20px;
- display:flex;
-
- 
+    margin-top:20px;
+    display:flex;
 }
 
 h2 {
@@ -27,8 +24,9 @@ form {
 }
 
 button {
+    width: 100%;
     margin-top:20px;
-    padding:3px 150px;
+    padding:3px;
     margin-left:0px;
     border-radius: 5px;
 }

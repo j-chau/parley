@@ -8,7 +8,7 @@ export default class App extends Component {
 
   render() {
     return (
-     <div>
+      <div>
         <div className="App wrapper">
           <header>
             <h1>What time is it?</h1>
@@ -16,9 +16,6 @@ export default class App extends Component {
           <div className="flex">
             <div>
               <UserInput />
-              <p>results</p>
-              <p>results</p>
-              <p>results</p>
             </div>
             <MeetingTime />
           </div>
