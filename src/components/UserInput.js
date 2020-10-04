@@ -15,6 +15,7 @@ export default class UserInput extends Component {
             etcList: [],
             timeZone: {},
             numLocation: 1,
+            errMsg: ""
         }
     }
 
@@ -79,9 +80,14 @@ export default class UserInput extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        if (this.state.numLocation < 3) {
+        if (this.state.duration === 0) {
+            this.setState({
+                errMsg: "Meeting duration cannot be 0"
+            })
+        } else if (this.state.numLocation < 3) {
             this.setState(prevState => ({
-                numLocation: prevState.numLocation + 1
+                numLocation: prevState.numLocation + 1,
+                errMsg: ""
             }))
             this.addNewLocation();
         } else this.setState({
@@ -115,6 +121,7 @@ export default class UserInput extends Component {
                 {this.addNewLocation()}
 
                 <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
+                <p className="errMsg">{this.state.errMsg}</p>
 
             </form>
         );
