@@ -1,10 +1,42 @@
 import React, { Component } from 'react'
 import './App.css';
+import axios from 'axios';
 import MeetingTime from './MeetingTime';
 
 import UserInput from './UserInput';
 
 export default class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      initialTime: "",
+      duration: 0,
+      endTime: "",
+      etcList: [],
+      timeZone: "",
+    }
+  }
+
+  componentDidMount() {
+    axios({
+        url: `http://worldtimeapi.org/api/timezone/Etc`,
+
+    }).then(response => {
+        this.setState({
+            etcList: response.data,
+        })
+    })
+
+  }
+
+  getInitalTime = (e,initialTime) => {
+      console.log("here");
+      console.log(initialTime);
+      this.setState({
+        initialTime 
+      })
+  }
 
   render() {
     return (
@@ -15,7 +47,10 @@ export default class App extends Component {
           </header>
           <div className="flex">
             <div>
-              <UserInput />
+              <UserInput 
+                  etcList={this.state.etcList}
+                  getInitialTime={() => this.getInitalTime()}
+              />
               <p>results</p>
               <p>results</p>
               <p>results</p>

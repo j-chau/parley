@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './UserInput.css';
+import { parse } from 'path';
 
 
 export default class UserInput extends Component {
@@ -11,25 +12,17 @@ export default class UserInput extends Component {
             initialTime: "",
             duration: 0,
             endTime: "",
-            etcList: [],
             timeZone: "",
         }
     }
 
     componentDidMount() {
-        axios({
-            url: `http://worldtimeapi.org/api/timezone/Etc`,
-
-        }).then(response => {
-            this.setState({
-                etcList: response.data,
-            })
-        })
+        
 
     }
 
     timeDropDownLoop = (start, end) => {
-        let arr = [];
+        let arr = [<option value={""}> {""} </option>];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8  && time > 12) time -= 12;
@@ -41,10 +34,11 @@ export default class UserInput extends Component {
 
     etcDropDownLoop = () => {
 
-        const arr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName}> {timeZoneName} </option >)
+        const arr = this.props.etcList.map((timeZoneName) => {
+            return (<option value={timeZoneName.replace('Etc/GMT','')}> {timeZoneName.replace('Etc/','')} </option >)
         })
 
+        arr.unshift(<option value={""}> {""} </option>);
         arr.pop();
         return arr;
 
@@ -54,8 +48,19 @@ export default class UserInput extends Component {
         const duration = this.state.duration + change;
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
-            endTime: prevState.initialTime + duration
+            endTime: parseInt(prevState.initialTime) + parseInt(duration)
         }))
+    }
+
+    handleChange = (e) => {
+        let time = e.target.value;
+        let end = parseInt(time) + parseInt(this.state.duration);
+        this.setState({
+            initialTime: time,
+            endTime: end, 
+
+        })
+
     }
 
 
@@ -64,7 +69,7 @@ export default class UserInput extends Component {
             <div>
                 <form action="">
                     <label htmlFor="">Meeting Start</label>
-                    <select value={this.state.initialTime} onChange={(e) => this.setState({ initialTime: e.target.value })} name="" id="">
+                    <select value={this.state.initialTime} onChange={this.handleChange} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
 
