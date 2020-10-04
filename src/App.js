@@ -11,21 +11,22 @@ export default class App extends Component {
      <div>
         <div className="App wrapper">
           <header>
-            <h1>What time it is?</h1>
-            <div className="flex">
-                <div>
-                  <UserInput />
-                  <p>results</p>
-                  <p>results</p>
-                  <p>results</p>
-                </div>
-                <MeetingTime />
-            </div>
+            <h1>What time is it?</h1>
           </header>
-        </div> 
-          <footer>
-            <p>&copy; Created at Juno   College</p>
-          </footer>
+          <div className="flex">
+            <div>
+              <UserInput />
+              <p>results</p>
+              <p>results</p>
+              <p>results</p>
+            </div>
+            <MeetingTime />
+          </div>
+
+        </div>
+        <footer>
+          <p>&copy; Created at <a href="https://junocollege.com/" target="_blank" rel="noopener noreferrer">Juno College</a></p>
+        </footer>
       </div>
     )
   }

@@ -68,10 +68,12 @@ export default class UserInput extends Component {
                         {this.timeDropDownLoop(8, 19)}
                     </select>
 
-                    <label htmlFor="">Duration Meeting</label>
-                    <i className="fas fa-minus" onClick={() => this.addOrSubtract(-1)}></i>
-                    <span>{this.state.duration}</span>
-                    <i className="fas fa-plus" onClick={() => this.addOrSubtract(+1)}></i>
+                    <label htmlFor="meetingDuration">Duration Meeting</label>
+                    <span className="srOnly">subtract meeting time</span>
+                    <i className="fas fa-minus" aria-hidden="true" onClick={() => this.addOrSubtract(-1)}></i>
+                    <span id="meetingDuration">{this.state.duration}</span>
+                    <span className="srOnly">add meeting time</span>
+                    <i className="fas fa-plus" aria-hidden="true" onClick={() => this.addOrSubtract(+1)}></i>
 
                     <div className="gtm">
                         <h2>Select Time Zone:</h2>
