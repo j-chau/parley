@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './MeetingTime.css';
+import './../styles/MeetingTime.css';
 
 export default class MeetingTime extends Component {
 

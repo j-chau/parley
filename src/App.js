@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './App.css';
-import MeetingTime from './MeetingTime';
 
-import UserInput from './UserInput';
+import MeetingTime from './components/MeetingTime';
+import UserInput from './components/UserInput';
 
 export default class App extends Component {
 

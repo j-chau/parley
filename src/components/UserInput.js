@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './UserInput.css';
+import './../styles/UserInput.css';
 
 import AddLocation from './AddLocation.js';
 
