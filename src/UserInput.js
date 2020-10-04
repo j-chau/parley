@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './UserInput.css';
 
 import AddLocation from './AddLocation.js';
@@ -12,37 +11,19 @@ export default class UserInput extends Component {
             initialTime: "",
             duration: 0,
             endTime: "",
-<<<<<<< HEAD
-            timeZone: "",
-=======
-            etcList: [],
+            // timeZone: "",
             timeZone: {},
             numLocation: 1,
->>>>>>> master
         }
     }
 
     componentDidMount() {
-<<<<<<< HEAD
         
 
     }
 
     timeDropDownLoop = (start, end) => {
-        let arr = [<option value={""}> {""} </option>];
-=======
-        axios({
-            url: `http://worldtimeapi.org/api/timezone/Etc`,
-        }).then(response => {
-            this.setState({
-                etcList: response.data,
-            })
-        })
-    }
-
-    timeDropDownLoop = (start, end) => {
-        let meetingTimeArr = [];
->>>>>>> master
+        let meetingTimeArr = [<option value={""}> {""} </option>];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
@@ -52,23 +33,14 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-<<<<<<< HEAD
 
-        const arr = this.props.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName.replace('Etc/GMT','')}> {timeZoneName.replace('Etc/','')} </option >)
+        const etcArr = this.props.etcList.map((timeZoneName) => {
+            return (<option value={timeZoneName.replace('Etc/GMT','')} key={timeZoneName}> {timeZoneName.replace('Etc/','')} </option >)
         })
 
-        arr.unshift(<option value={""}> {""} </option>);
-        arr.pop();
-        return arr;
-
-=======
-        const etcArr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName} key={timeZoneName}>{timeZoneName}</option >)
-        })
+        etcArr.unshift(<option value={""}> {""} </option>);
         etcArr.pop();
         return etcArr;
->>>>>>> master
     }
 
     addOrSubtract = (change) => {
@@ -79,7 +51,6 @@ export default class UserInput extends Component {
         }))
     }
 
-<<<<<<< HEAD
     handleChange = (e) => {
         let time = e.target.value;
         let end = parseInt(time) + parseInt(this.state.duration);
@@ -91,7 +62,6 @@ export default class UserInput extends Component {
 
     }
 
-=======
     addNewLocation = () => {
         let locationArr = [];
         for (let i = 0; i < this.state.numLocation; i++) {
@@ -124,7 +94,6 @@ export default class UserInput extends Component {
             this.addNewLocation();
         } else console.log("max number reached");
     }
->>>>>>> master
 
     render() {
         return (
