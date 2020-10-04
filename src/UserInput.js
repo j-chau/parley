@@ -35,21 +35,58 @@ export default class UserInput extends Component {
         }) 
     }
 
-    getFullTimeZone = (array) => {
-        const fullArray = [];
-        array.forEach((zone) => {
+    getTimeZoneOffset = (zone) => {
+        return new Promise ((resolve) => {
             axios.get(`http://worldtimeapi.org/api/timezone/${zone}`)
-                .then(response => {
-                    const allZones = response.data;
-                    fullArray.push(`${allZones.timezone} (GMT${allZones.utc_offset})`)
-                });
-                
-        });
-        console.log('lets set state')
-        this.setState({
-            timeZoneList: fullArray,
+                .then((res) => {
+                    const fullZone = `${zone} (GMT${res.data.utc_offset})`
+                    resolve(fullZone);
+                })
         })
     }
+
+    getFullTimeZone = async(array) => {
+        let newArr = [];
+        const promiseLoop = [];
+        // for every zone in passed array run it through getTimeZoneOffset function and push result to promiseLoop array
+        for (const zone of array) {
+            promiseLoop.push(this.getTimeZoneOffset(zone))
+        }
+        // await all the promises in the promiseLoop array and when resolved make equal to newArr
+        newArr = await Promise.all(promiseLoop);
+        // update state with all resolved promises in newArr to timeZoneList
+        this.setState({
+            timeZoneList: newArr,
+        })
+    }
+
+    // getFullTimeZone = async (array) => {
+    //     const newArr = [];
+    //     for (const zone of array) {
+    //         const newZone = await this.getTimeZoneOffset(zone);
+    //         newArr.push(newZone)
+    //     }
+    //     this.setState({
+    //         timeZoneList: newArr,
+    //     })
+    // }
+
+
+    // getFullTimeZone = (array) => {
+    //     const fullArray = [];
+    //     array.forEach((zone) => {
+    //         axios.get(`http://worldtimeapi.org/api/timezone/${zone}`)
+    //             .then(response => {
+    //                 const allZones = response.data;
+    //                 fullArray.push(`${allZones.timezone} (GMT${allZones.utc_offset})`)
+    //             });
+                
+    //     });
+    //     console.log('lets set state')
+    //     this.setState({
+    //         timeZoneList: fullArray,
+    //     })
+    // }
 
     timeDropDownLoop = (start, end) => {
     let arr = [<option value={""}>{""}</option>];
@@ -62,7 +99,6 @@ export default class UserInput extends Component {
     }
 
     ZoneDropDownLoop = () => {
-
         const arr = this.state.timeZoneList.map((timeZone) => {
             return (<option value={timeZone}> {timeZone} </option >)
         })
