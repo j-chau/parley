@@ -84,7 +84,10 @@ export default class UserInput extends Component {
                 numLocation: prevState.numLocation + 1
             }))
             this.addNewLocation();
-        } else console.log("max number reached");
+        } else this.setState({
+            errMsg: "Max. number of locations reached"
+        })
+
     }
 
     render() {
