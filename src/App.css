@@ -14,7 +14,7 @@ body {
   font-family: var(--bodyFont);
 }
 
-h1, h2, h3 {
+h1, h3 {
   font-family: var(--headerFont);
 }
 
@@ -36,14 +36,12 @@ h1 {
 .flex {
   display:flex;
   justify-content: space-between;
-  
 }
 
 footer p {
-margin-top: 148px;
-background-color:lightBlue;
-padding: 7px;
-width:100%;
-text-align: center;
-
+  margin-top: 148px;
+  background-color:lightBlue;
+  padding: 7px;
+  width:100%;
+  text-align: center;
 }
