@@ -27,21 +27,21 @@ export default class UserInput extends Component {
     }
 
     timeDropDownLoop = (start, end) => {
-        let arr = [];
+        let meetingTimeArr = [];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
-            arr.push(<option value={i} key={i}> {time} </option>)
+            meetingTimeArr.push(<option value={i} key={i}> {time} </option>)
         }
-        return arr;
+        return meetingTimeArr;
     }
 
     etcDropDownLoop = () => {
-        const arr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName} key={timeZoneName}> {timeZoneName} </option >)
+        const etcArr = this.state.etcList.map((timeZoneName) => {
+            return (<option value={timeZoneName} key={timeZoneName}>{timeZoneName}</option >)
         })
-        arr.pop();
-        return arr;
+        etcArr.pop();
+        return etcArr;
     }
 
     addOrSubtract = (change) => {
