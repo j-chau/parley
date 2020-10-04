@@ -8,7 +8,7 @@ export default class App extends Component {
 
   render() {
     return (
-     <div>
+      <div>
         <div className="App wrapper">
           <header>
             <h1>What time is it?</h1>

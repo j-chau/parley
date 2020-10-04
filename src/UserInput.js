@@ -19,35 +19,29 @@ export default class UserInput extends Component {
     componentDidMount() {
         axios({
             url: `http://worldtimeapi.org/api/timezone/Etc`,
-
         }).then(response => {
             this.setState({
                 etcList: response.data,
             })
         })
-
     }
 
     timeDropDownLoop = (start, end) => {
         let arr = [];
         for (let i = start; i < end; i++) {
             let time = i;
-            if (start === 8  && time > 12) time -= 12;
-            arr.push(<option value={i}> {time} </option>)
+            if (start === 8 && time > 12) time -= 12;
+            arr.push(<option value={i} key={i}> {time} </option>)
         }
-
         return arr;
     }
 
     etcDropDownLoop = () => {
-
         const arr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName}> {timeZoneName} </option >)
+            return (<option value={timeZoneName} key={timeZoneName}> {timeZoneName} </option >)
         })
-
         arr.pop();
         return arr;
-
     }
 
     addOrSubtract = (change) => {
