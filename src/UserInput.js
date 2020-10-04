@@ -10,8 +10,7 @@ export default class UserInput extends Component {
         this.state = {
             initialTime: "",
             duration: 0,
-            endTime: "",
-            // timeZone: "",
+            initialEndTime: "",
             timeZone: {},
             numLocation: 1,
         }
@@ -47,7 +46,7 @@ export default class UserInput extends Component {
         const duration = this.state.duration + change;
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
-            endTime: parseInt(prevState.initialTime) + parseInt(duration)
+            initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
         }))
     }
 
@@ -56,7 +55,7 @@ export default class UserInput extends Component {
         let end = parseInt(time) + parseInt(this.state.duration);
         this.setState({
             initialTime: time,
-            endTime: end, 
+            initialEndTime: end, 
 
         })
 
@@ -87,6 +86,7 @@ export default class UserInput extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
+        this.props.getUserInput(this.state.initialTime, this.state.initialEndTime, this.state.timeZone);
         if (this.state.numLocation < 3) {
             this.setState(prevState => ({
                 numLocation: prevState.numLocation + 1

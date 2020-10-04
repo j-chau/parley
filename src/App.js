@@ -12,9 +12,9 @@ export default class App extends Component {
     this.state = {
       initialTime: "",
       duration: 0,
-      endTime: "",
+      initialEndTime: "",
       etcList: [],
-      timeZone: "",
+      timeZone: {},
     }
   }
 
@@ -27,8 +27,17 @@ export default class App extends Component {
             etcList: response.data,
         })
     })
-
   }
+
+  getUserInput = (initialTime, initialEndTime, timeZone ) => {
+    this.setState({
+      initialTime,
+      initialEndTime,
+      timeZone,
+    })
+  }
+
+
   
   render() {
     return (
@@ -39,7 +48,10 @@ export default class App extends Component {
           </header>
           <div className="flex">
             <div>
-              <UserInput />
+              <UserInput
+              etcList={this.state.etcList}
+              getUserInput={this.getUserInput}
+              />
             </div>
             <MeetingTime />
           </div>
