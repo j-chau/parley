@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './UserInput.css';
-import { parse } from 'path';
 
 
 export default class UserInput extends Component {

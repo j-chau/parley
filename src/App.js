@@ -29,15 +29,7 @@ export default class App extends Component {
     })
 
   }
-
-  getInitalTime = (e,initialTime) => {
-      console.log("here");
-      console.log(initialTime);
-      this.setState({
-        initialTime 
-      })
-  }
-
+  
   render() {
     return (
      <div>
@@ -49,7 +41,6 @@ export default class App extends Component {
             <div>
               <UserInput 
                   etcList={this.state.etcList}
-                  getInitialTime={() => this.getInitalTime()}
               />
               <p>results</p>
               <p>results</p>
