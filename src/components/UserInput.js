@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './UserInput.css';
+import './../styles/UserInput.css';
 
 import AddLocation from './AddLocation.js';
 
@@ -15,6 +15,7 @@ export default class UserInput extends Component {
             etcList: [],
             timeZone: {},
             numLocation: 1,
+            errMsg: ""
         }
     }
 
@@ -79,36 +80,50 @@ export default class UserInput extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        if (this.state.numLocation < 3) {
+        if (this.state.duration === 0) {
+            this.setState({
+                errMsg: "Meeting duration cannot be 0"
+            })
+        } else if (this.state.numLocation < 3) {
             this.setState(prevState => ({
-                numLocation: prevState.numLocation + 1
+                numLocation: prevState.numLocation + 1,
+                errMsg: ""
             }))
             this.addNewLocation();
-        } else console.log("max number reached");
+        } else this.setState({
+            errMsg: "Max. number of locations reached"
+        })
+
     }
 
     render() {
         return (
-            <div>
-                <form action="">
+            <form action="">
+                <fieldset className="meetingStart">
                     <label htmlFor="">Meeting Start</label>
                     <select value={this.state.initialTime} onChange={(e) => this.setState({ initialTime: e.target.value })} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
+                </fieldset>
 
-                    <label htmlFor="meetingDuration">Duration Meeting</label>
+                <label htmlFor="meetingDuration">Meeting Duration</label>
+                <fieldset className="addSubtract" id="meetingDuration">
+
                     <span className="srOnly">subtract meeting time</span>
-                    <i className="fas fa-minus" aria-hidden="true" onClick={() => this.addOrSubtract(-1)}></i>
-                    <span id="meetingDuration">{this.state.duration}</span>
+                    <i className="fas fa-minus" aria-hidden="true" tabIndex={0} onClick={() => this.addOrSubtract(-1)}></i>
+
+                    <span>{this.state.duration}</span>
+
                     <span className="srOnly">add meeting time</span>
-                    <i className="fas fa-plus" aria-hidden="true" onClick={() => this.addOrSubtract(+1)}></i>
+                    <i className="fas fa-plus" aria-hidden="true" tabIndex={0} onClick={() => this.addOrSubtract(+1)}></i>
+                </fieldset>
 
-                    {this.addNewLocation()}
+                {this.addNewLocation()}
 
-                    <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
+                <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
+                <p className="errMsg">{this.state.errMsg}</p>
 
-                </form>
-            </div>
+            </form>
         );
     }
 }

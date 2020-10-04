@@ -3,8 +3,6 @@
   grid-template-columns: 200px 200px;
   background-color: var(--turquoise);
   padding: 10px;
-
-  
 }
 
 .grid-item p {
@@ -13,11 +11,10 @@
 }
 
 .item{
-  background-color: white;
-   
+  background-color: white; 
 }
 
 h3 {
-  margin-top:15px;
+  margin-top: 15px;
   text-align: center;
 }
