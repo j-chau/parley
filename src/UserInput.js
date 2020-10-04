@@ -17,11 +17,8 @@ export default class UserInput extends Component {
     }
 
     componentDidMount() {
-        
-        axios({
-            url: `http://worldtimeapi.org/api/timezone/`,
-
-        }).then(response => {
+        const getZoneNames = axios.get(`http://worldtimeapi.org/api/timezone/`)
+        getZoneNames.then(response => {
             const allZones = response.data;
             const timeZoneArr = allZones.filter((zone) => {
                 return(zone.startsWith("America") || 
@@ -33,9 +30,24 @@ export default class UserInput extends Component {
                 zone.startsWith("Indian") || 
                 zone.startsWith("Pacific"))
             });
-            this.setState({
-                timeZoneList: timeZoneArr,
-            })
+            console.log('get full time zone')
+            this.getFullTimeZone(timeZoneArr);
+        }) 
+    }
+
+    getFullTimeZone = (array) => {
+        const fullArray = [];
+        array.forEach((zone) => {
+            axios.get(`http://worldtimeapi.org/api/timezone/${zone}`)
+                .then(response => {
+                    const allZones = response.data;
+                    fullArray.push(`${allZones.timezone} (GMT${allZones.utc_offset})`)
+                });
+                
+        });
+        console.log('lets set state')
+        this.setState({
+            timeZoneList: fullArray,
         })
     }
 
@@ -51,8 +63,8 @@ export default class UserInput extends Component {
 
     ZoneDropDownLoop = () => {
 
-        const arr = this.state.timeZoneList.map((timeZoneName) => {
-            return (<option value={timeZoneName}> {`${timeZoneName}`} </option >)
+        const arr = this.state.timeZoneList.map((timeZone) => {
+            return (<option value={timeZone}> {timeZone} </option >)
         })
         return arr;
     }
@@ -80,7 +92,9 @@ export default class UserInput extends Component {
                     <i className="fas fa-plus" onClick={() => this.addOrSubtract(+1)}></i>
 
                     <label htmlFor="timeZone">Time Zone:</label>
-                    <input list="timeZones" name="timeZone" id="timeZone" value={this.state.intialTimeZone} onChange={(e) => this.setState({ intialTimeZone: e.target.value })}/>
+                    <input list="timeZones" name="timeZone" id="timeZone" value={this.state.intialTimeZone} onChange={(e) => this.setState({ intialTimeZone: e.target.value,
+                    intialTimeZoneOffset: e.target.value.substr(-7, 3),
+                    })}/>
                     <datalist  id="timeZones" >
                         {this.ZoneDropDownLoop()}
                     </datalist>
