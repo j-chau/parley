@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './UserInput.css';
 
+import AddLocation from './AddLocation.js';
 
 export default class UserInput extends Component {
 
@@ -12,7 +13,8 @@ export default class UserInput extends Component {
             duration: 0,
             endTime: "",
             etcList: [],
-            timeZone: "",
+            timeZone: {},
+            numLocation: 1,
         }
     }
 
@@ -52,6 +54,38 @@ export default class UserInput extends Component {
         }))
     }
 
+    addNewLocation = () => {
+        let locationArr = [];
+        for (let i = 0; i < this.state.numLocation; i++) {
+            locationArr.push(
+                <AddLocation
+                    id={i + 1}
+                    key={i + 1}
+                    timeZoneList={this.etcDropDownLoop()}
+                    onSelect={(e) => this.saveTimeZone(e.target.value, e.target.name)} />
+            )
+        }
+        return locationArr;
+    }
+
+    saveTimeZone = (value, name) => {
+        const copyTimeZone = { ...this.state.timeZone };
+        const keyName = "location" + name;
+        copyTimeZone[keyName] = value;
+        this.setState({
+            timeZone: copyTimeZone
+        })
+    }
+
+    handleClick = (e) => {
+        e.preventDefault();
+        if (this.state.numLocation < 3) {
+            this.setState(prevState => ({
+                numLocation: prevState.numLocation + 1
+            }))
+            this.addNewLocation();
+        } else console.log("max number reached");
+    }
 
     render() {
         return (
@@ -69,13 +103,10 @@ export default class UserInput extends Component {
                     <span className="srOnly">add meeting time</span>
                     <i className="fas fa-plus" aria-hidden="true" onClick={() => this.addOrSubtract(+1)}></i>
 
-                    <div className="gtm">
-                        <h2>Select Time Zone:</h2>
-                        <select value={this.state.timeZone} name="" id="" onChange={(e) => this.setState({ timeZone: e.target.value })}>
-                            {this.etcDropDownLoop()}
-                        </select>
-                    </div>
-                    <button type="submit" value="Submit">Submit</button>
+                    {this.addNewLocation()}
+
+                    <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
+
                 </form>
             </div>
         );

@@ -16,9 +16,6 @@ export default class App extends Component {
           <div className="flex">
             <div>
               <UserInput />
-              <p>results</p>
-              <p>results</p>
-              <p>results</p>
             </div>
             <MeetingTime />
           </div>
