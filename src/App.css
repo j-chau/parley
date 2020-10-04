@@ -10,6 +10,14 @@
   --turquoise: #ace8cd;
 }
 
+body {
+  font-family: var(--bodyFont);
+}
+
+h1, h2, h3 {
+  font-family: var(--headerFont);
+}
+
 .wrapper {
   max-width: 940px;
   margin: 0 auto;
