@@ -42,9 +42,7 @@ export default class UserInput extends Component {
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
             initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
-        }), () => {
-            this.updateLocationTimes();
-        })
+        }))
     }
 
     handleChange = (e) => {
@@ -53,8 +51,6 @@ export default class UserInput extends Component {
         this.setState({
             initialTime: time,
             initialEndTime: end, 
-        }, () => {
-            this.updateLocationTimes();
         })
     }
 
@@ -75,44 +71,12 @@ export default class UserInput extends Component {
     saveTimeZone = (value, name) => {
         const copyTimeZone = { ...this.state.timeZone };
         const keyName = "location" + name;
-        let tzOffset = "";
-        if (value !== "") {
-            tzOffset = parseInt(value)
-        }
-        
-        if (name === "1"){
-            copyTimeZone[keyName] = {
-                offset: tzOffset,
-            }
-        } else {
-            copyTimeZone[keyName] = {
-                offset: tzOffset,
-                difference: tzOffset - this.state.timeZone.location1.offset,
-                start: parseInt(this.state.initialTime) + parseInt(tzOffset - this.state.timeZone.location1.offset),
-                end: parseInt(this.state.initialEndTime) + parseInt(tzOffset - this.state.timeZone.location1.offset),
-            }
-        }
+        copyTimeZone[keyName] = value;
         this.setState({
             timeZone: copyTimeZone
         })
     }
 
-    updateLocationTimes = () => {
-        for(const property in this.state.timeZone) {
-            // if(this.state.timeZone[property].offset !== "" && this.state.timeZone[property] !== "location1"){
-            const copyTimeZone = {...this.state.timeZone};
-            copyTimeZone[property] = {
-                offset: this.state.timeZone[property].offset,
-                difference: this.state.timeZone[property].difference,
-                start: parseInt(this.state.initialTime) + parseInt(this.state.timeZone[property].offset - this.state.timeZone.location1.offset),
-                end: parseInt(this.state.initialEndTime) + parseInt(this.state.timeZone[property].offset- this.state.timeZone.location1.offset),
-            }
-            this.setState({
-                timeZone: copyTimeZone,
-            })
-            // }
-        }
-    }
 
     handleClick = (e) => {
         e.preventDefault();

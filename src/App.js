@@ -10,9 +10,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      initialTime: "",
-      duration: 0,
-      initialEndTime: "",
+      initialTime: 0,
+      initialEndTime: 0,
       etcList: [],
       timeZone: {},
     }
@@ -37,8 +36,6 @@ export default class App extends Component {
     })
   }
 
-
-  
   render() {
     return (
       <div>
