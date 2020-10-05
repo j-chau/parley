@@ -81,7 +81,7 @@ export default class UserInput extends Component {
 
     handleClick = (e) => {
         e.preventDefault();
-        this.props.getUserInput(this.state.initialTime, this.state.initialEndTime, this.state.timeZone);
+        this.props.getUserInput(this.state.initialTime, this.state.duration, this.state.timeZone);
         if (this.state.duration === 0) this.setState({
             errMsg: "Meeting duration cannot be 0"
         })

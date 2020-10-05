@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './../styles/MeetingTime.css';
 
 const showResults = ({ initialTime, timeZone, timeZoneCheck }) => {
-    const displayArr = Object.values(timeZone);
+    const displayArr = Object.values(timeZone.startTime);
     let displayTime;
     return displayArr.map((el, index) => {
         if (timeZoneCheck[index]) displayTime = "goodTime";
