@@ -17,7 +17,6 @@ export default class UserInput extends Component {
     }
 
     componentDidMount() {
-        
 
     }
 
@@ -51,14 +50,13 @@ export default class UserInput extends Component {
     }
 
     handleChange = (e) => {
+        this.updateLocationTimes()
         let time = e.target.value;
         let end = parseInt(time) + parseInt(this.state.duration);
         this.setState({
             initialTime: time,
             initialEndTime: end, 
-
         })
-
     }
 
     addNewLocation = () => {
@@ -78,10 +76,33 @@ export default class UserInput extends Component {
     saveTimeZone = (value, name) => {
         const copyTimeZone = { ...this.state.timeZone };
         const keyName = "location" + name;
-        copyTimeZone[keyName] = value;
+        let tzOffset = "";
+        if (value !== "") {
+            tzOffset = parseInt(value)
+        } else {
+            tzOffset = "";
+        }
+        
+        if (name === "1"){
+            copyTimeZone[keyName] = {
+                offset: tzOffset,
+            }
+        } else {
+            copyTimeZone[keyName] = {
+                offset: tzOffset,
+                difference: tzOffset - this.state.timeZone.location1.offset,
+                start: parseInt(this.state.initialTime) + parseInt(tzOffset - this.state.timeZone.location1.offset),
+                end: parseInt(this.state.initialEndTime) + parseInt(tzOffset - this.state.timeZone.location1.offset),
+            }
+        }
         this.setState({
             timeZone: copyTimeZone
         })
+    }
+
+    updateLocationTimes = (initialTime) => {
+        console.log("you changed the intial time");
+        
     }
 
     handleClick = (e) => {
