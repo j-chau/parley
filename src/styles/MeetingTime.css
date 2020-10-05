@@ -18,3 +18,11 @@ h3 {
   margin-top: 15px;
   text-align: center;
 }
+
+.goodTime {
+  color: green;
+}
+
+.badTime {
+  color: red;
+}

@@ -10,11 +10,13 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      initialTime: 0,
-      initialEndTime: 0,
       etcList: [],
-      timeZone: {},
-      timeZoneCheck: []
+      userInput: {
+        initialTime: 0,
+        initialEndTime: 0,
+        timeZone: {},
+        timeZoneCheck: []
+      }
     }
   }
 
@@ -31,9 +33,11 @@ export default class App extends Component {
 
   getUserInput = (initialTime, initialEndTime, timeZone) => {
     this.setState({
-      initialTime,
-      initialEndTime,
-      timeZone,
+      userInput: {
+        initialTime,
+        initialEndTime,
+        timeZone,
+      }
     })
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
@@ -59,10 +63,13 @@ export default class App extends Component {
       copyTimeZone["location" + (i + 1)] = adjustLocationTime;
     }
     copyTimeZoneCheck.unshift(true);
-    this.setState({
-      timeZone: copyTimeZone,
-      timeZoneCheck: copyTimeZoneCheck
-    })
+    this.setState(prevState => ({
+      userInput: {
+        ...prevState.userInput,
+        timeZone: copyTimeZone,
+        timeZoneCheck: copyTimeZoneCheck
+      }
+    }))
   }
 
   render() {
@@ -79,7 +86,7 @@ export default class App extends Component {
                 getUserInput={this.getUserInput}
               />
             </div>
-            <MeetingTime />
+            <MeetingTime displayResults={this.state.userInput} />
           </div>
 
         </div>
