@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './../styles/UserInput.css';
 
 import AddLocation from './AddLocation.js';
@@ -11,26 +10,15 @@ export default class UserInput extends Component {
         this.state = {
             initialTime: "",
             duration: 0,
-            endTime: "",
-            etcList: [],
+            initialEndTime: "",
             timeZone: {},
             numLocation: 1,
             errMsg: ""
         }
     }
 
-    componentDidMount() {
-        axios({
-            url: `http://worldtimeapi.org/api/timezone/Etc`,
-        }).then(response => {
-            this.setState({
-                etcList: response.data,
-            })
-        })
-    }
-
     timeDropDownLoop = (start, end) => {
-        let meetingTimeArr = [];
+        let meetingTimeArr = [<option value={""}> {""} </option>];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
@@ -40,9 +28,12 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-        const etcArr = this.state.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName} key={timeZoneName}>{timeZoneName}</option >)
+
+        const etcArr = this.props.etcList.map((timeZoneName) => {
+            return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
         })
+
+        etcArr.unshift(<option value={""}> {""} </option>);
         etcArr.pop();
         return etcArr;
     }
@@ -51,8 +42,17 @@ export default class UserInput extends Component {
         const duration = this.state.duration + change;
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
-            endTime: prevState.initialTime + duration
+            initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
         }))
+    }
+
+    handleChange = (e) => {
+        let time = e.target.value;
+        let end = parseInt(time) + parseInt(this.state.duration);
+        this.setState({
+            initialTime: time,
+            initialEndTime: end,
+        })
     }
 
     addNewLocation = () => {
@@ -78,6 +78,7 @@ export default class UserInput extends Component {
         })
     }
 
+
     handleClick = (e) => {
         e.preventDefault();
         if (this.state.duration === 0) {
@@ -85,6 +86,9 @@ export default class UserInput extends Component {
                 errMsg: "Meeting duration cannot be 0"
             })
         } else if (this.state.numLocation < 3) {
+            this.props.getUserInput(this.state.initialTime, this.state.initialEndTime, this.state.timeZone);
+        }
+        if (this.state.numLocation < 3) {
             this.setState(prevState => ({
                 numLocation: prevState.numLocation + 1,
                 errMsg: ""
@@ -101,7 +105,7 @@ export default class UserInput extends Component {
             <form action="">
                 <fieldset className="meetingStart">
                     <label htmlFor="">Meeting Start</label>
-                    <select value={this.state.initialTime} onChange={(e) => this.setState({ initialTime: e.target.value })} name="" id="">
+                    <select value={this.state.initialTime} onChange={this.handleChange} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
                 </fieldset>
