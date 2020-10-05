@@ -16,10 +16,6 @@ export default class UserInput extends Component {
         }
     }
 
-    componentDidMount() {
-
-    }
-
     timeDropDownLoop = (start, end) => {
         let meetingTimeArr = [<option value={""}> {""} </option>];
         for (let i = start; i < end; i++) {
@@ -46,16 +42,19 @@ export default class UserInput extends Component {
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
             initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
-        }))
+        }), () => {
+            this.updateLocationTimes();
+        })
     }
 
     handleChange = (e) => {
-        this.updateLocationTimes()
         let time = e.target.value;
         let end = parseInt(time) + parseInt(this.state.duration);
         this.setState({
             initialTime: time,
             initialEndTime: end, 
+        }, () => {
+            this.updateLocationTimes();
         })
     }
 
@@ -79,8 +78,6 @@ export default class UserInput extends Component {
         let tzOffset = "";
         if (value !== "") {
             tzOffset = parseInt(value)
-        } else {
-            tzOffset = "";
         }
         
         if (name === "1"){
@@ -100,9 +97,21 @@ export default class UserInput extends Component {
         })
     }
 
-    updateLocationTimes = (initialTime) => {
-        console.log("you changed the intial time");
-        
+    updateLocationTimes = () => {
+        for(const property in this.state.timeZone) {
+            // if(this.state.timeZone[property].offset !== "" && this.state.timeZone[property] !== "location1"){
+            const copyTimeZone = {...this.state.timeZone};
+            copyTimeZone[property] = {
+                offset: this.state.timeZone[property].offset,
+                difference: this.state.timeZone[property].difference,
+                start: parseInt(this.state.initialTime) + parseInt(this.state.timeZone[property].offset - this.state.timeZone.location1.offset),
+                end: parseInt(this.state.initialEndTime) + parseInt(this.state.timeZone[property].offset- this.state.timeZone.location1.offset),
+            }
+            this.setState({
+                timeZone: copyTimeZone,
+            })
+            // }
+        }
     }
 
     handleClick = (e) => {
