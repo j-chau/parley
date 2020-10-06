@@ -16,7 +16,7 @@ export default class App extends Component {
         initialEndTime: 0,
         timeZone: {
           startTime: {},
-          endTime: {}
+          suggestTime: {}
         },
         timeZoneCheck: []
       }
@@ -55,6 +55,45 @@ export default class App extends Component {
     let copyStartTime = { location1: startTime };
 
     this.validateTime(timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime);
+    this.setState(prevState => ({
+      userInput: {
+        ...prevState.userInput,
+        timeZone: {
+          startTime: copyStartTime,
+          suggestTime: copyStartTime
+        },
+        timeZoneCheck: copyTimeZoneCheck
+      }
+    }))
+
+    // if meeting time for other locations are outside of work hours, 
+    //    iterate start time (from initial user input) until suitable time is reached
+    let check = copyTimeZoneCheck.every(Boolean);
+    let newSuggestStart = { ...copyStartTime };
+    if (!check) {
+      let newSuggestCheck = [...copyTimeZoneCheck];
+      let i = 0;
+      while (!check && i < 24) {
+        i++;
+        startTime += 1;
+        check = this.validateTime(timeZoneArr, startTime, newSuggestCheck, newSuggestStart).every(Boolean);
+      }
+    }
+
+    // when check becomes true after while loop, setState for updated suggestTime
+    if (check) {
+      this.setState(prevState => ({
+        userInput: {
+          ...prevState.userInput,
+          timeZone: {
+            ...prevState.userInput.timeZone,
+            suggestTime: newSuggestStart
+          }
+        }
+      }))
+    }
+  }
+
   validateTime = (timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime) => {
     const duration = this.state.duration;
     for (let i = 0; i < timeZoneArr.length; i++) {
