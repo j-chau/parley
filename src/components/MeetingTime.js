@@ -12,10 +12,10 @@ const showResults = ({ duration, timeZone, timeZoneCheck }) => {
         const newTime = displaySuggestArr[index];
 
         return (
-            <div className={"grid-item " + displayTime}>
-                <p>{`${el} - ${el + duration}`}</p>
-                <p>{`${newTime} - ${newTime + duration}`}</p>
-            </div>
+          <>
+            <p className={displayTime}>{`${el} - ${el + duration}`}</p>
+            <p>{`${newTime} - ${newTime + duration}`}</p>
+          </>
         )
     })
 }
@@ -23,14 +23,9 @@ const showResults = ({ duration, timeZone, timeZoneCheck }) => {
 const MeetingTime = (props) => {
     return (
       <div className="grid-container">
-        <div className="grid-item item">
           <h3>Local time</h3>
-          {showResults(props.displayResults)}
-        </div>
-        <div className="grid-item item">
           <h3>Suggestions</h3>
-          {/* {showResults(props.displayResults)} */}
-        </div>
+        {showResults(props.displayResults)}
       </div>
     );
 }
