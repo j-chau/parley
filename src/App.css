@@ -14,6 +14,7 @@ body {
   font-family: var(--bodyFont);
   position: relative;
   min-height: 100vh;
+  padding-top:30px;
   
 }
 
@@ -37,7 +38,7 @@ header {
 h1 {
  font-size: 2rem;
  text-align: center;
- margin: 30px 100px 100px;
+ margin: 0 100px 100px;
 }
 
 .flex {
