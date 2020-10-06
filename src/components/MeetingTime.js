@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react'
 import './../styles/MeetingTime.css';
 
 const showResults = ({ duration, timeZone, timeZoneCheck }) => {
@@ -12,10 +12,10 @@ const showResults = ({ duration, timeZone, timeZoneCheck }) => {
         const newTime = displaySuggestArr[index];
 
         return (
-          <>
+          <Fragment key={index}>
             <p className={displayTime}>{`${el} - ${el + duration}`}</p>
             <p>{`${newTime} - ${newTime + duration}`}</p>
-          </>
+          </Fragment>
         )
     })
 }
