@@ -2,14 +2,16 @@ import React from 'react';
 import './../styles/MeetingTime.css';
 
 const showResults = ({ initialTime, timeZone, timeZoneCheck }) => {
-    const displayArr = Object.values(timeZone.startTime);
+    const displayStartArr = Object.values(timeZone.startTime);
+    const displayEndArr = Object.values(timeZone.endTime);
     let displayTime;
-    return displayArr.map((el, index) => {
+    return displayStartArr.map((el, index) => {
         if (timeZoneCheck[index]) displayTime = "goodTime";
         else displayTime = "badTime"
+        
         return (
             <div className={"grid-item " + displayTime}>
-                <p>{el}</p>
+                <p>{`${el} - ${displayEndArr[index]}`}</p>
             </div>
         )
     })
