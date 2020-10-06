@@ -37,26 +37,27 @@ export default class App extends Component {
   getUserInput = (initialTime, duration, timeZone) => {
     this.setState({
       userInput: {
-        initialTime,
+        initialTime: parseInt(initialTime),
         duration,
         timeZone: {
           startTime: timeZone
         },
       }
     })
+
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
     const timeZoneArr = timeZoneObj.map(el => parseInt(el))
+    let startTime = parseInt(initialTime)
 
     // initial settings for for-loop
     let copyTimeZoneCheck = [];
-    let copyStartTime = { location1: parseInt(initialTime) };
-    let copyEndTime = { location1: parseInt(initialTime) + duration };
+    let copyStartTime = { location1: startTime };
 
     // adjusting time at different timeZones to be relative to first location
     for (let i = 1; i < timeZoneArr.length; i++) {
       let goodTime = true;
-      let adjustStartTime = parseInt(initialTime) + timeZoneArr[i] - timeZoneArr[0];
+      let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
 
       // adjust for times that are outside 0-24
       if (adjustStartTime < 0) adjustStartTime += 24;
@@ -71,7 +72,6 @@ export default class App extends Component {
 
       const keyName = "location" + (i + 1);
       copyStartTime[keyName] = adjustStartTime;
-      copyEndTime[keyName] = adjustEndTime;
     }
     copyTimeZoneCheck.unshift(true);
     this.setState(prevState => ({
@@ -79,7 +79,6 @@ export default class App extends Component {
         ...prevState.userInput,
         timeZone: {
           startTime: copyStartTime,
-          endTime: copyEndTime
         },
         timeZoneCheck: copyTimeZoneCheck
       }

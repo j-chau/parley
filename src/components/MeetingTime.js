@@ -1,9 +1,8 @@
 import React from 'react';
 import './../styles/MeetingTime.css';
 
-const showResults = ({ initialTime, timeZone, timeZoneCheck }) => {
+const showResults = ({ duration, timeZone, timeZoneCheck }) => {
     const displayStartArr = Object.values(timeZone.startTime);
-    const displayEndArr = Object.values(timeZone.endTime);
     let displayTime;
     return displayStartArr.map((el, index) => {
         if (timeZoneCheck[index]) displayTime = "goodTime";
@@ -11,7 +10,7 @@ const showResults = ({ initialTime, timeZone, timeZoneCheck }) => {
         
         return (
             <div className={"grid-item " + displayTime}>
-                <p>{`${el} - ${displayEndArr[index]}`}</p>
+                <p>{`${el} - ${el + duration}`}</p>
             </div>
         )
     })
