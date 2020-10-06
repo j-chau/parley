@@ -66,7 +66,7 @@ export default class App extends Component {
 
       // if meeting start time && meeting end time is outside of working hours, set false
       if ((adjustStartTime < 8 || adjustStartTime > 19)
-        && (adjustEndTime < 8 || adjustEndTime > 19)) goodTime = false;
+        || (adjustEndTime < 8 || adjustEndTime > 19)) goodTime = false;
       copyTimeZoneCheck.push(goodTime);
 
       const keyName = "location" + (i + 1);
