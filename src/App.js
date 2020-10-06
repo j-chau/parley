@@ -50,12 +50,16 @@ export default class App extends Component {
     const timeZoneArr = timeZoneObj.map(el => parseInt(el))
     let startTime = parseInt(initialTime)
 
-    // initial settings for for-loop
+    // initial settings for validateTime()
     let copyTimeZoneCheck = [];
     let copyStartTime = { location1: startTime };
 
-    // adjusting time at different timeZones to be relative to first location
-    for (let i = 1; i < timeZoneArr.length; i++) {
+    this.validateTime(timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime);
+  validateTime = (timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime) => {
+    const duration = this.state.duration;
+    for (let i = 0; i < timeZoneArr.length; i++) {
+
+      // adjusting time at different timeZones to be relative to first location
       let goodTime = true;
       let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
 
@@ -65,24 +69,15 @@ export default class App extends Component {
 
       let adjustEndTime = adjustStartTime + duration;
 
-      // if meeting start time && meeting end time is outside of working hours, set false
+      // if meeting start time OR meeting end time is outside of working hours, set false
       if ((adjustStartTime < 8 || adjustStartTime > 19)
         || (adjustEndTime < 8 || adjustEndTime > 19)) goodTime = false;
-      copyTimeZoneCheck.push(goodTime);
+      copyTimeZoneCheck[i] = goodTime;
 
       const keyName = "location" + (i + 1);
       copyStartTime[keyName] = adjustStartTime;
     }
-    copyTimeZoneCheck.unshift(true);
-    this.setState(prevState => ({
-      userInput: {
-        ...prevState.userInput,
-        timeZone: {
-          startTime: copyStartTime,
-        },
-        timeZoneCheck: copyTimeZoneCheck
-      }
-    }))
+    return copyTimeZoneCheck;
   }
 
   render() {
