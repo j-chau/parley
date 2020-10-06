@@ -12,6 +12,9 @@
 
 body {
   font-family: var(--bodyFont);
+  position: relative;
+  min-height: 100vh;
+  
 }
 
 h1, h3 {
@@ -21,10 +24,14 @@ h1, h3 {
 .wrapper {
   max-width: 940px;
   margin: 0 auto;
+  width: 90%;
+  padding-bottom: 50px;
 }
 
 header {
   margin:0 20px;
+
+ 
 }
 
 h1 {
@@ -37,11 +44,20 @@ h1 {
   display:flex;
   justify-content: space-between;
 }
+ 
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+}
 
 footer p {
-  margin-top: 148px;
   background-color:lightBlue;
   padding: 7px;
-  width:100%;
   text-align: center;
+}
+
+footer p a:hover {
+  color:#261870;
 }

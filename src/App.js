@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css';
 import axios from 'axios';
+import './styles/MediaQuery.css'
 
 import MeetingTime from './components/MeetingTime';
 import UserInput from './components/UserInput';
@@ -87,7 +88,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <div className="App wrapper">
           <header>
             <h1>What time is it?</h1>
@@ -101,13 +102,21 @@ export default class App extends Component {
             </div>
             <MeetingTime displayResults={this.state.userInput} />
           </div>
-
         </div>
         <footer>
-          <p>&copy; Created at <a href="https://junocollege.com/" target="_blank" rel="noopener noreferrer">Juno College</a></p>
+          <p>
+            &copy; Created at{" "}
+            <a
+              href="https://junocollege.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juno College
+            </a>
+          </p>
         </footer>
-      </div>
-    )
+      </>
+    );
   }
 }
 

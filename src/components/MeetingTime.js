@@ -18,15 +18,16 @@ const showResults = ({ duration, timeZone, timeZoneCheck }) => {
 
 const MeetingTime = (props) => {
     return (
-        <div className="grid-container">
-            <div className="grid-item item">
-                <h3>Local time</h3>
-            </div>
-            <div className="grid-item item">
-                <h3>Suggestions</h3>
-            </div>
-            {showResults(props.displayResults)}
+      <div className="grid-container">
+        <div className="grid-item item">
+          <h3>Local time</h3>
+          {showResults(props.displayResults)}
         </div>
+        <div className="grid-item item">
+          <h3>Suggestions</h3>
+          {/* {showResults(props.displayResults)} */}
+        </div>
+      </div>
     );
 }
 
