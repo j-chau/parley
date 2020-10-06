@@ -18,7 +18,7 @@ export default class UserInput extends Component {
     }
 
     timeDropDownLoop = (start, end) => {
-        let meetingTimeArr = [<option value={""}> {""} </option>];
+        let meetingTimeArr = [<option value={""} key={0}> {""} </option>];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
@@ -33,7 +33,7 @@ export default class UserInput extends Component {
             return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
         })
 
-        etcArr.unshift(<option value={""}> {""} </option>);
+        etcArr.unshift(<option value={""} key={0} > {""} </option>);
         etcArr.pop();
         return etcArr;
     }

@@ -13,6 +13,7 @@ form {
     background-color: var(--turquoise);
     padding: 20px;
     text-align: center;
+
 }
 
 label {
@@ -74,7 +75,6 @@ button:focus  {
 
 p {
     margin-top:20px;
-    padding:20px;
+    padding:14px;
     background-color: var(--turquoise);
-    width:400px;
 }
