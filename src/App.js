@@ -13,6 +13,7 @@ export default class App extends Component {
     this.state = {
       etcList: [],
       userInput: {
+        duration: 0,
         initialTime: 0,
         initialEndTime: 0,
         timeZone: {
@@ -65,7 +66,7 @@ export default class App extends Component {
     let copyTimeZoneCheck = [];
     let copyStartTime = { location1: startTime };
 
-    this.validateTime(timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime);
+    this.validateTime(timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime);
     this.setState(prevState => ({
       userInput: {
         ...prevState.userInput,
@@ -87,7 +88,7 @@ export default class App extends Component {
       while (!check && i < 24) {
         i++;
         startTime += 1;
-        check = this.validateTime(timeZoneArr, startTime, newSuggestCheck, newSuggestStart).every(Boolean);
+        check = this.validateTime(timeZoneArr, startTime, duration, newSuggestCheck, newSuggestStart).every(Boolean);
       }
     }
 
@@ -105,8 +106,7 @@ export default class App extends Component {
     }
   }
 
-  validateTime = (timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime) => {
-    const duration = this.state.duration;
+  validateTime = (timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime) => {
     for (let i = 0; i < timeZoneArr.length; i++) {
 
       // adjusting time at different timeZones to be relative to first location
@@ -118,7 +118,6 @@ export default class App extends Component {
       else if (adjustStartTime > 24) adjustStartTime -= 24;
 
       let adjustEndTime = adjustStartTime + duration;
-
       // if meeting start time OR meeting end time is outside of working hours, set false
       if ((adjustStartTime < 8 || adjustStartTime > 19)
         || (adjustEndTime < 8 || adjustEndTime > 19)) goodTime = false;

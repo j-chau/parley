@@ -41,7 +41,9 @@ export default class UserInput extends Component {
         if (duration < 5 && duration > 0) {
             this.setState(prevState => ({
                 duration: prevState.duration + change
-            }))
+            }), () => {
+                if (this.state.timeZone.hasOwnProperty("location1")) this.updateResults();
+            })
         }
     }
 
@@ -63,6 +65,8 @@ export default class UserInput extends Component {
         let time = e.target.value;
         this.setState({
             initialTime: time
+        }, () => {
+            if (this.state.timeZone.hasOwnProperty("location1")) this.updateResults();
         })
     }
 
