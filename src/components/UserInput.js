@@ -8,7 +8,7 @@ export default class UserInput extends Component {
     constructor() {
         super();
         this.state = {
-            initialTime: "",
+            initialTime: 0,
             duration: 0,
             timeZone: {},
             numLocation: 1,
