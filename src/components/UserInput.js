@@ -10,7 +10,6 @@ export default class UserInput extends Component {
         this.state = {
             initialTime: 0,
             duration: 0,
-            initialEndTime: 0,
             timeZone: {},
             numLocation: 1,
             errMsg: ""
@@ -28,31 +27,24 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-
-        const etcArr = this.props.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
+        return this.props.etcList.map(el => {
+            let displayText = "GMT ";
+            if (el >= 0) displayText += "+";
+            return (
+                <option value={el} key={el}>{displayText + el}</option>
+            )
         })
-
-        etcArr.unshift(<option value={""} key={0} > {""} </option>);
-        etcArr.pop();
-        return etcArr;
     }
 
     addOrSubtract = (change) => {
         const duration = this.state.duration + change;
-        if (duration < 5 && duration > 0) this.setState(prevState => ({
-            duration: prevState.duration + change,
-            initialEndTime: prevState.initialTime + duration,
-        }))
-    }
-
-    handleChange = (e) => {
-        let time = parseInt(e.target.value);
-        let end = time + this.state.duration;
-        this.setState({
-            initialTime: time,
-            initialEndTime: end,
-        })
+        if (duration < 5 && duration > 0) {
+            this.setState(prevState => ({
+                duration: prevState.duration + change
+            }), () => {
+                if (this.state.timeZone.hasOwnProperty("location1")) this.updateResults();
+            })
+        }
     }
 
     addNewLocation = () => {
@@ -63,25 +55,37 @@ export default class UserInput extends Component {
                     id={i + 1}
                     key={i + 1}
                     timeZoneList={this.etcDropDownLoop()}
-                    onSelect={(e) => this.saveTimeZone(e.target.value, e.target.name)} />
+                    onSelect={this.saveTimeZone} />
             )
         }
         return locationArr;
     }
 
-    saveTimeZone = (value, name) => {
-        const copyTimeZone = { ...this.state.timeZone };
-        const keyName = "location" + name;
-        copyTimeZone[keyName] = value;
+    saveStartTime = (e) => {
+        let time = e.target.value;
         this.setState({
-            timeZone: copyTimeZone
+            initialTime: time
+        }, () => {
+            if (this.state.timeZone.hasOwnProperty("location1")) this.updateResults();
         })
     }
 
+    saveTimeZone = (e) => {
+        const copyTimeZone = { ...this.state.timeZone };
+        const keyName = "location" + e.target.name;
+        copyTimeZone[keyName] = e.target.value;
+        this.setState({
+            timeZone: copyTimeZone
+        }, this.updateResults);
+    }
+
+    updateResults = () => {
+        const { initialTime, duration, timeZone } = this.state;
+        this.props.getUserInput(initialTime, duration, timeZone);
+    }
 
     handleClick = (e) => {
         e.preventDefault();
-        this.props.getUserInput(this.state.initialTime, this.state.duration, this.state.timeZone);
         if (this.state.duration === 0) this.setState({
             errMsg: "Meeting duration cannot be 0"
         })
@@ -94,15 +98,15 @@ export default class UserInput extends Component {
         } else this.setState({
             errMsg: "Max. number of locations reached"
         })
-
     }
 
     render() {
         return (
             <form action="">
+
                 <fieldset className="meetingStart">
                     <label htmlFor="">Meeting Start</label>
-                    <select value={this.state.initialTime} onChange={this.handleChange} name="" id="">
+                    <select value={this.state.initialTime} onChange={this.saveStartTime} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
                 </fieldset>
