@@ -123,7 +123,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <div className="App wrapper">
+        <div className="wrapper">
           <header>
             <h1>What time is it?</h1>
           </header>

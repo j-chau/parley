@@ -14,8 +14,7 @@ body {
   font-family: var(--bodyFont);
   position: relative;
   min-height: 100vh;
-  padding-top:30px;
-  
+  padding-top: 30px;
 }
 
 h1, h3 {
@@ -31,8 +30,6 @@ h1, h3 {
 
 header {
   margin:0 20px;
-
- 
 }
 
 h1 {

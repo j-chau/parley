@@ -28,7 +28,6 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-
         const etcArr = this.props.etcList.map((timeZoneName) => {
             return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
         })
@@ -40,10 +39,12 @@ export default class UserInput extends Component {
 
     addOrSubtract = (change) => {
         const duration = this.state.duration + change;
-        if (duration < 5 && duration > 0) this.setState(prevState => ({
-            duration: prevState.duration + change,
-            initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
-        }))
+        if (duration < 5 && duration > 0) {
+            this.setState(prevState => ({
+                duration: prevState.duration + change,
+                initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
+            }))
+        }
     }
 
     handleChange = (e) => {
@@ -78,7 +79,6 @@ export default class UserInput extends Component {
         })
     }
 
-
     handleClick = (e) => {
         e.preventDefault();
         this.props.getUserInput(this.state.initialTime, this.state.duration, this.state.timeZone);
@@ -94,12 +94,12 @@ export default class UserInput extends Component {
         } else this.setState({
             errMsg: "Max. number of locations reached"
         })
-
     }
 
     render() {
         return (
             <form action="">
+
                 <fieldset className="meetingStart">
                     <label htmlFor="">Meeting Start</label>
                     <select value={this.state.initialTime} onChange={this.handleChange} name="" id="">

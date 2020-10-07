@@ -2,6 +2,7 @@ i {
     margin:0 5px;
     cursor: pointer;
 }
+
 i:focus {
     outline-offset: 3px;
 }
