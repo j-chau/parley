@@ -13,8 +13,10 @@ export default class App extends Component {
     this.state = {
       etcList: [],
       userInput: {
+        meetingFound: true,
+        noMeetingsMsg: "",
+        duration: 0,
         initialTime: 0,
-        initialEndTime: 0,
         timeZone: {
           startTime: {},
           suggestTime: {}
@@ -29,33 +31,43 @@ export default class App extends Component {
       url: `http://worldtimeapi.org/api/timezone/Etc`,
 
     }).then(response => {
+      const etcList = response.data;
+      etcList.pop();
+      const truncArr = etcList.map(el => parseInt(el.substring(7)));
+      truncArr[0] = 0;
+      truncArr.sort((a, b) => a - b);
+
+      const negOnlyArr = truncArr.filter(el => el < 0).reverse();
+      const posOnlyArr = truncArr.slice(negOnlyArr.length);
+      const sortedArr = posOnlyArr.concat(negOnlyArr);
+
       this.setState({
-        etcList: response.data,
+        etcList: sortedArr,
       })
     })
   }
 
   getUserInput = (initialTime, duration, timeZone) => {
-    this.setState({
+    this.setState(prevState => ({
       userInput: {
-        initialTime: parseInt(initialTime),
+        ...prevState.userInput,
+        initialTime: initialTime,
         duration,
         timeZone: {
           startTime: timeZone
         },
       }
-    })
+    }))
 
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
     const timeZoneArr = timeZoneObj.map(el => parseInt(el))
-    let startTime = parseInt(initialTime)
-
+    let startTime = initialTime;
     // initial settings for validateTime()
     let copyTimeZoneCheck = [];
     let copyStartTime = { location1: startTime };
 
-    this.validateTime(timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime);
+    this.validateTime(timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime);
     this.setState(prevState => ({
       userInput: {
         ...prevState.userInput,
@@ -77,7 +89,7 @@ export default class App extends Component {
       while (!check && i < 24) {
         i++;
         startTime += 1;
-        check = this.validateTime(timeZoneArr, startTime, newSuggestCheck, newSuggestStart).every(Boolean);
+        check = this.validateTime(timeZoneArr, startTime, duration, newSuggestCheck, newSuggestStart).every(Boolean);
       }
     }
 
@@ -86,29 +98,43 @@ export default class App extends Component {
       this.setState(prevState => ({
         userInput: {
           ...prevState.userInput,
+          meetingFound: true,
+          noMeetingsMsg: "",
           timeZone: {
             ...prevState.userInput.timeZone,
             suggestTime: newSuggestStart
           }
         }
       }))
+    } else {
+      this.setState(prevState => ({
+        userInput: {
+          ...prevState.userInput,
+          meetingFound: false,
+          noMeetingsMsg: "No meetings found during work hours"
+        }
+      }))
     }
   }
 
-  validateTime = (timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime) => {
-    const duration = this.state.duration;
+  validateTime = (timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime) => {
     for (let i = 0; i < timeZoneArr.length; i++) {
 
       // adjusting time at different timeZones to be relative to first location
       let goodTime = true;
       let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
-
+      
       // adjust for times that are outside 0-24
-      if (adjustStartTime < 0) adjustStartTime += 24;
-      else if (adjustStartTime > 24) adjustStartTime -= 24;
+      if (adjustStartTime < 0) {
+        adjustStartTime += 24;
+        //add -1d here
+      }
+      else if (adjustStartTime > 24) {
+        adjustStartTime -= 24;
+        // add +1d here
+      } 
 
       let adjustEndTime = adjustStartTime + duration;
-
       // if meeting start time OR meeting end time is outside of working hours, set false
       if ((adjustStartTime < 8 || adjustStartTime > 19)
         || (adjustEndTime < 8 || adjustEndTime > 19)) goodTime = false;
@@ -123,7 +149,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <div className="App wrapper">
+        <div className="wrapper">
           <header>
             <h1>What time is it?</h1>
           </header>
@@ -132,6 +158,8 @@ export default class App extends Component {
               <UserInput
                 etcList={this.state.etcList}
                 getUserInput={this.getUserInput}
+                meetingFound={this.state.userInput.meetingFound}
+                meetingMsg={this.state.userInput.noMeetingsMsg}
               />
             </div>
             <MeetingTime displayResults={this.state.userInput} />
