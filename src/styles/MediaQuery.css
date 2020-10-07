@@ -1,18 +1,16 @@
 @media (max-width: 940px) {
+
     .flex {
         flex-direction: column;
         align-items: center;
     }
 
     div.grid-container {
-    grid-template-columns: 190px 190px;
-    margin-top: 20px;
+        grid-template-columns: 190px 190px;
+        margin-top: 20px;
     }
 
     .wrapper {
-    padding-bottom: 100px;
+        padding-bottom: 100px;
     }
-
-
-
 }

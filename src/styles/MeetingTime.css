@@ -12,7 +12,7 @@
 }
 
 .grid-container p {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 h3 {
@@ -20,9 +20,9 @@ h3 {
 }
 
 .goodTime {
-  color: green;
+  color: var(--okGreen);
 }
 
 .badTime {
-  color: red;
+  color: var(--errRed);
 }
