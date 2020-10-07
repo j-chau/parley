@@ -9,7 +9,7 @@ export default class UserInput extends Component {
         super();
         this.state = {
             initialTime: "",
-            duration: 0,
+            duration: 1,
             initialEndTime: "",
             timeZone: {},
             numLocation: 1,
@@ -33,6 +33,7 @@ export default class UserInput extends Component {
             return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
         })
 
+        // remove first and last elements from array
         etcArr.shift();
         etcArr.pop();
         
@@ -75,7 +76,7 @@ export default class UserInput extends Component {
     saveTimeZone = (value, name) => {
         const copyTimeZone = { ...this.state.timeZone };
         const keyName = "location" + name;
-        copyTimeZone[keyName] = value || 0;
+        copyTimeZone[keyName] = value;
 
         if (value !== '') {
             this.setState({
