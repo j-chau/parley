@@ -33,8 +33,8 @@ export default class App extends Component {
       dataResponse: 'json',
       params: {
         reqUrl: `https://worldtimeapi.org/api/timezone/Etc`,
-          xmlToJSON: false,
-          useCache: false
+        xmlToJSON: false,
+        useCache: false
       }
     }).then(response => {
       const etcList = response.data;
@@ -129,7 +129,7 @@ export default class App extends Component {
       // adjusting time at different timeZones to be relative to first location
       let goodTime = true;
       let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
-      
+
       // adjust for times that are outside 0-24
       if (adjustStartTime < 0) {
         adjustStartTime += 24;
@@ -138,7 +138,7 @@ export default class App extends Component {
       else if (adjustStartTime > 24) {
         adjustStartTime -= 24;
         // add +1d here
-      } 
+      }
 
       let adjustEndTime = adjustStartTime + duration;
       // if meeting start time OR meeting end time is outside of working hours, set false

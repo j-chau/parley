@@ -13,11 +13,10 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound }) => {
 
         return (
             <Fragment key={index}>
-            <p className={displayTime}>{`${el} - ${el + duration}`}</p>
-            {meetingFound === true ?
-            <p>{`${newTime} - ${newTime + duration}`}</p> :
-            <p>None</p>}
-            
+                <p className={displayTime}>{`${el} - ${el + duration}`}</p>
+                {meetingFound === true
+                    ? <p>{`${newTime} - ${newTime + duration}`}</p>
+                    : <p>None</p>}
             </Fragment>
         )
     })

@@ -27,7 +27,7 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-        const etcArr =  this.props.etcList.map(el => {
+        const etcArr = this.props.etcList.map(el => {
             let displayText = "GMT ";
             if (el >= 0) displayText += "+";
             return (
@@ -131,10 +131,8 @@ export default class UserInput extends Component {
                 {this.addNewLocation()}
 
                 <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
-                <p className="errMsg">{this.state.errMsg}</p> 
+                <p className="errMsg">{this.state.errMsg}</p>
                 <p className="errMsg">{this.props.meetingMsg}</p>
-                
-                
 
             </form>
         );
