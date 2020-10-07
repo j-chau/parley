@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import './../styles/MeetingTime.css';
 
-const showResults = ({ duration, timeZone, timeZoneCheck }) => {
+const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound }) => {
     const displayStartArr = Object.values(timeZone.startTime);
     const displaySuggestArr = Object.values(timeZone.suggestTime);
 
@@ -14,7 +14,10 @@ const showResults = ({ duration, timeZone, timeZoneCheck }) => {
         return (
           <Fragment key={index}>
             <p className={displayTime}>{`${el} - ${el + duration}`}</p>
-            <p>{`${newTime} - ${newTime + duration}`}</p>
+            {meetingFound === true ?
+            <p>{`${newTime} - ${newTime + duration}`}</p> :
+            <p>{"None"}</p>}
+            
           </Fragment>
         )
     })

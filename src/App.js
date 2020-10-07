@@ -13,6 +13,7 @@ export default class App extends Component {
     this.state = {
       etcList: [],
       userInput: {
+        meetingFound: true,
         initialTime: 0,
         initialEndTime: 0,
         timeZone: {
@@ -36,15 +37,16 @@ export default class App extends Component {
   }
 
   getUserInput = (initialTime, duration, timeZone) => {
-    this.setState({
+    this.setState(prevState => ({
       userInput: {
+        ...prevState.userInput,
         initialTime: initialTime,
         duration,
         timeZone: {
           startTime: timeZone
         },
       }
-    })
+    }))
 
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
@@ -77,6 +79,9 @@ export default class App extends Component {
         i++;
         startTime += 1;
         check = this.validateTime(timeZoneArr, startTime, newSuggestCheck, newSuggestStart).every(Boolean);
+        if (i === 24 && !check) {
+          this.noMeetings();
+        }
       }
     }
 
@@ -94,6 +99,16 @@ export default class App extends Component {
     }
   }
 
+// when check is still false after while loop
+  noMeetings = () => {
+    this.setState(prevState => ({
+      userInput: {
+        ...prevState.userInput,
+        meetingFound: false,
+      }
+    }))
+  }
+  
   validateTime = (timeZoneArr, startTime, copyTimeZoneCheck, copyStartTime) => {
     const duration = this.state.duration;
     for (let i = 0; i < timeZoneArr.length; i++) {
@@ -131,6 +146,7 @@ export default class App extends Component {
               <UserInput
                 etcList={this.state.etcList}
                 getUserInput={this.getUserInput}
+                meetingFound={this.state.userInput.meetingFound}
               />
             </div>
             <MeetingTime displayResults={this.state.userInput} />

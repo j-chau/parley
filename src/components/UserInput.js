@@ -13,7 +13,8 @@ export default class UserInput extends Component {
             initialEndTime: 0,
             timeZone: {},
             numLocation: 1,
-            errMsg: ""
+            errMsg: "",
+            noMeetingsMsg: ""
         }
     }
 
@@ -94,7 +95,6 @@ export default class UserInput extends Component {
         } else this.setState({
             errMsg: "Max. number of locations reached"
         })
-
     }
 
     render() {
@@ -122,7 +122,10 @@ export default class UserInput extends Component {
                 {this.addNewLocation()}
 
                 <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
-                <p className="errMsg">{this.state.errMsg}</p>
+                <p className="errMsg">{this.state.errMsg}</p> 
+                <p className="errMsg">{this.state.noMeetingMsg}</p>
+                
+                
 
             </form>
         );
