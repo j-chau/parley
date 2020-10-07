@@ -13,9 +13,10 @@ export default class App extends Component {
     this.state = {
       etcList: [],
       userInput: {
+        meetingFound: true,
+        noMeetingsMsg: "",
         duration: 0,
         initialTime: 0,
-        initialEndTime: 0,
         timeZone: {
           startTime: {},
           suggestTime: {}
@@ -47,15 +48,16 @@ export default class App extends Component {
   }
 
   getUserInput = (initialTime, duration, timeZone) => {
-    this.setState({
+    this.setState(prevState => ({
       userInput: {
+        ...prevState.userInput,
         initialTime: initialTime,
         duration,
         timeZone: {
           startTime: timeZone
         },
       }
-    })
+    }))
 
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
@@ -96,10 +98,20 @@ export default class App extends Component {
       this.setState(prevState => ({
         userInput: {
           ...prevState.userInput,
+          meetingFound: true,
+          noMeetingsMsg: "",
           timeZone: {
             ...prevState.userInput.timeZone,
             suggestTime: newSuggestStart
           }
+        }
+      }))
+    } else {
+      this.setState(prevState => ({
+        userInput: {
+          ...prevState.userInput,
+          meetingFound: false,
+          noMeetingsMsg: "No meetings found during work hours"
         }
       }))
     }
@@ -111,10 +123,16 @@ export default class App extends Component {
       // adjusting time at different timeZones to be relative to first location
       let goodTime = true;
       let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
-
+      
       // adjust for times that are outside 0-24
-      if (adjustStartTime < 0) adjustStartTime += 24;
-      else if (adjustStartTime > 24) adjustStartTime -= 24;
+      if (adjustStartTime < 0) {
+        adjustStartTime += 24;
+        //add -1d here
+      }
+      else if (adjustStartTime > 24) {
+        adjustStartTime -= 24;
+        // add +1d here
+      } 
 
       let adjustEndTime = adjustStartTime + duration;
       // if meeting start time OR meeting end time is outside of working hours, set false
@@ -140,6 +158,8 @@ export default class App extends Component {
               <UserInput
                 etcList={this.state.etcList}
                 getUserInput={this.getUserInput}
+                meetingFound={this.state.userInput.meetingFound}
+                meetingMsg={this.state.userInput.noMeetingsMsg}
               />
             </div>
             <MeetingTime displayResults={this.state.userInput} />

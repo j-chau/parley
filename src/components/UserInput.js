@@ -12,7 +12,7 @@ export default class UserInput extends Component {
             duration: 0,
             timeZone: {},
             numLocation: 1,
-            errMsg: ""
+            errMsg: "",
         }
     }
 
@@ -62,7 +62,7 @@ export default class UserInput extends Component {
     }
 
     saveStartTime = (e) => {
-        let time = e.target.value;
+        let time = parseInt(e.target.value);
         this.setState({
             initialTime: time
         }, () => {
@@ -126,7 +126,10 @@ export default class UserInput extends Component {
                 {this.addNewLocation()}
 
                 <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
-                <p className="errMsg">{this.state.errMsg}</p>
+                <p className="errMsg">{this.state.errMsg}</p> 
+                <p className="errMsg">{this.props.meetingMsg}</p>
+                
+                
 
             </form>
         );
