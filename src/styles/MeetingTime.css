@@ -20,9 +20,9 @@ h3 {
 }
 
 .goodTime {
-  color: green;
+  color: var(--okGreen);
 }
 
 .badTime {
-  color: red;
+  color: var(--errRed);
 }
