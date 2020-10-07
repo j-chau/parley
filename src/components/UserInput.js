@@ -14,7 +14,6 @@ export default class UserInput extends Component {
             timeZone: {},
             numLocation: 1,
             errMsg: "",
-            noMeetingsMsg: ""
         }
     }
 
@@ -123,7 +122,7 @@ export default class UserInput extends Component {
 
                 <button type="submit" value="Submit" onClick={this.handleClick}>Add New Location</button>
                 <p className="errMsg">{this.state.errMsg}</p> 
-                <p className="errMsg">{this.state.noMeetingMsg}</p>
+                <p className="errMsg">{this.props.meetingMsg}</p>
                 
                 
 
