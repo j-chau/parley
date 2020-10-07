@@ -29,8 +29,18 @@ export default class App extends Component {
       url: `http://worldtimeapi.org/api/timezone/Etc`,
 
     }).then(response => {
+      const etcList = response.data;
+      etcList.pop();
+      const truncArr = etcList.map(el => parseInt(el.substring(7)));
+      truncArr[0] = 0;
+      truncArr.sort((a, b) => a - b);
+
+      const negOnlyArr = truncArr.filter(el => el < 0).reverse();
+      const posOnlyArr = truncArr.slice(negOnlyArr.length);
+      const sortedArr = posOnlyArr.concat(negOnlyArr);
+
       this.setState({
-        etcList: response.data,
+        etcList: sortedArr,
       })
     })
   }

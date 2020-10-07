@@ -28,13 +28,13 @@ export default class UserInput extends Component {
     }
 
     etcDropDownLoop = () => {
-        const etcArr = this.props.etcList.map((timeZoneName) => {
-            return (<option value={timeZoneName.replace('Etc/GMT', '')} key={timeZoneName}> {timeZoneName.replace('Etc/', '')} </option >)
+        return this.props.etcList.map(el => {
+            let displayText = "GMT ";
+            if (el >= 0) displayText += "+";
+            return (
+                <option value={el} key={el}>{displayText + el}</option>
+            )
         })
-
-        etcArr.unshift(<option value={""} key={0} > {""} </option>);
-        etcArr.pop();
-        return etcArr;
     }
 
     addOrSubtract = (change) => {
@@ -49,7 +49,7 @@ export default class UserInput extends Component {
 
     handleChange = (e) => {
         let time = e.target.value;
-        let end = parseInt(time) + parseInt(this.state.duration);
+        let end = time + parseInt(this.state.duration);
         this.setState({
             initialTime: time,
             initialEndTime: end,
