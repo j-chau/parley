@@ -28,8 +28,14 @@ export default class App extends Component {
 
   componentDidMount() {
     axios({
-      url: `http://worldtimeapi.org/api/timezone/Etc`,
-
+      method: 'Get',
+      url: 'https://proxy.hackeryou.com',
+      dataResponse: 'json',
+      params: {
+        reqUrl: `https://worldtimeapi.org/api/timezone/Etc`,
+          xmlToJSON: false,
+          useCache: false
+      }
     }).then(response => {
       const etcList = response.data;
       etcList.pop();
@@ -181,4 +187,3 @@ export default class App extends Component {
     );
   }
 }
-
