@@ -34,7 +34,7 @@ export default class UserInput extends Component {
                 <option value={el} key={el}>{displayText + el}</option>
             )
         })
-        etcArr.unshift(<option value={""} key={0} disabled selected > {""} </option>);
+        etcArr.unshift(<option value={""} key={etcArr.length} disabled defaultValue > {""} </option>);
         return etcArr;
     }
 
