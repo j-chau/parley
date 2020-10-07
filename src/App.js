@@ -38,7 +38,7 @@ export default class App extends Component {
   getUserInput = (initialTime, duration, timeZone) => {
     this.setState({
       userInput: {
-        initialTime: parseInt(initialTime),
+        initialTime: initialTime,
         duration,
         timeZone: {
           startTime: timeZone
@@ -49,8 +49,7 @@ export default class App extends Component {
     // creating array from the values of the timeZone
     const timeZoneObj = Object.values(timeZone);
     const timeZoneArr = timeZoneObj.map(el => parseInt(el))
-    let startTime = parseInt(initialTime)
-
+    let startTime = initialTime;
     // initial settings for validateTime()
     let copyTimeZoneCheck = [];
     let copyStartTime = { location1: startTime };

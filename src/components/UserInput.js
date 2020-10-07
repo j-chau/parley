@@ -8,9 +8,9 @@ export default class UserInput extends Component {
     constructor() {
         super();
         this.state = {
-            initialTime: "",
+            initialTime: 0,
             duration: 0,
-            initialEndTime: "",
+            initialEndTime: 0,
             timeZone: {},
             numLocation: 1,
             errMsg: ""
@@ -42,13 +42,13 @@ export default class UserInput extends Component {
         const duration = this.state.duration + change;
         if (duration < 5 && duration > 0) this.setState(prevState => ({
             duration: prevState.duration + change,
-            initialEndTime: parseInt(prevState.initialTime) + parseInt(duration)
+            initialEndTime: prevState.initialTime + duration,
         }))
     }
 
     handleChange = (e) => {
-        let time = e.target.value;
-        let end = parseInt(time) + parseInt(this.state.duration);
+        let time = parseInt(e.target.value);
+        let end = time + this.state.duration;
         this.setState({
             initialTime: time,
             initialEndTime: end,
