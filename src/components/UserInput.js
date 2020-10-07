@@ -45,13 +45,6 @@ export default class UserInput extends Component {
         }
     }
 
-    handleChange = (e) => {
-        let time = e.target.value;
-        this.setState({
-            initialTime: time
-        })
-    }
-
     addNewLocation = () => {
         let locationArr = [];
         for (let i = 0; i < this.state.numLocation; i++) {
@@ -60,24 +53,35 @@ export default class UserInput extends Component {
                     id={i + 1}
                     key={i + 1}
                     timeZoneList={this.etcDropDownLoop()}
-                    onSelect={(e) => this.saveTimeZone(e.target.value, e.target.name)} />
+                    onSelect={this.saveTimeZone} />
             )
         }
         return locationArr;
     }
 
-    saveTimeZone = (value, name) => {
+    saveStartTime = (e) => {
+        let time = e.target.value;
+        this.setState({
+            initialTime: time
+        })
+    }
+
+    saveTimeZone = (e) => {
         const copyTimeZone = { ...this.state.timeZone };
-        const keyName = "location" + name;
-        copyTimeZone[keyName] = value;
+        const keyName = "location" + e.target.name;
+        copyTimeZone[keyName] = e.target.value;
         this.setState({
             timeZone: copyTimeZone
-        })
+        }, this.updateResults);
+    }
+
+    updateResults = () => {
+        const { initialTime, duration, timeZone } = this.state;
+        this.props.getUserInput(initialTime, duration, timeZone);
     }
 
     handleClick = (e) => {
         e.preventDefault();
-        this.props.getUserInput(this.state.initialTime, this.state.duration, this.state.timeZone);
         if (this.state.duration === 0) this.setState({
             errMsg: "Meeting duration cannot be 0"
         })
@@ -98,7 +102,7 @@ export default class UserInput extends Component {
 
                 <fieldset className="meetingStart">
                     <label htmlFor="">Meeting Start</label>
-                    <select value={this.state.initialTime} onChange={this.handleChange} name="" id="">
+                    <select value={this.state.initialTime} onChange={this.saveStartTime} name="" id="">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
                 </fieldset>
