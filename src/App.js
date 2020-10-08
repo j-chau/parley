@@ -21,7 +21,8 @@ export default class App extends Component {
           startTime: {},
           suggestTime: {}
         },
-        timeZoneCheck: []
+        timeZoneCheck: [],
+        gmtValues: []
       }
     }
   }
@@ -33,8 +34,8 @@ export default class App extends Component {
       dataResponse: 'json',
       params: {
         reqUrl: `https://worldtimeapi.org/api/timezone/Etc`,
-          xmlToJSON: false,
-          useCache: false
+        xmlToJSON: false,
+        useCache: false
       }
     }).then(response => {
       const etcList = response.data;
@@ -71,7 +72,10 @@ export default class App extends Component {
     let startTime = initialTime;
     // initial settings for validateTime()
     let copyTimeZoneCheck = [];
-    let copyStartTime = { location1: startTime };
+    let copyStartTime = {
+      location1: startTime,
+      dayShift1: 0
+    };
 
     this.validateTime(timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime);
     this.setState(prevState => ({
@@ -81,7 +85,8 @@ export default class App extends Component {
           startTime: copyStartTime,
           suggestTime: copyStartTime
         },
-        timeZoneCheck: copyTimeZoneCheck
+        timeZoneCheck: copyTimeZoneCheck,
+        gmtValues: timeZoneObj
       }
     }))
 
@@ -129,16 +134,17 @@ export default class App extends Component {
       // adjusting time at different timeZones to be relative to first location
       let goodTime = true;
       let adjustStartTime = startTime + timeZoneArr[i] - timeZoneArr[0];
-      
+
       // adjust for times that are outside 0-24
       if (adjustStartTime < 0) {
         adjustStartTime += 24;
-        //add -1d here
-      }
-      else if (adjustStartTime > 24) {
+        copyStartTime["dayShift" + (i + 1)] = -1;
+      } else if (adjustStartTime > 24) {
         adjustStartTime -= 24;
-        // add +1d here
-      } 
+        copyStartTime["dayShift" + (i + 1)] = +1;
+      } else {
+        copyStartTime["dayShift" + (i + 1)] = 0;
+      }
 
       let adjustEndTime = adjustStartTime + duration;
       // if meeting start time OR meeting end time is outside of working hours, set false
@@ -160,14 +166,14 @@ export default class App extends Component {
             <h1>What time is it?</h1>
           </header>
           <div className="flex">
-            <div>
+            {/* <div> */}
               <UserInput
                 etcList={this.state.etcList}
                 getUserInput={this.getUserInput}
                 meetingFound={this.state.userInput.meetingFound}
                 meetingMsg={this.state.userInput.noMeetingsMsg}
               />
-            </div>
+            {/* </div> */}
             <MeetingTime displayResults={this.state.userInput} />
           </div>
         </div>

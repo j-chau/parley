@@ -17,6 +17,20 @@
 
 h3 {
   margin-top: 27px;
+  font-size: 1.4em;
+}
+
+.gmtGridItem {
+  grid-column: span 2;
+  background-color: #fff;
+  padding: 0 0 7px;
+  align-self: end;
+}
+
+.dayShift {
+  padding-left: 1.4em;
+  width: min-content;
+  font-size: 0.6em;
 }
 
 .goodTime {
