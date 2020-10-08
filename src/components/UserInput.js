@@ -20,7 +20,6 @@ export default class UserInput extends Component {
         let meetingTimeArr = [];
         for (let i = start; i < end; i++) {
             let time = i;
-            if (start === 8 && time > 12) time -= 12;
             meetingTimeArr.push(<option value={i} key={i}> {time}:00</option>)
         }
         return meetingTimeArr;
