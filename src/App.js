@@ -166,14 +166,14 @@ export default class App extends Component {
             <h1>What time is it?</h1>
           </header>
           <div className="flex">
-            <div>
+            {/* <div> */}
               <UserInput
                 etcList={this.state.etcList}
                 getUserInput={this.getUserInput}
                 meetingFound={this.state.userInput.meetingFound}
                 meetingMsg={this.state.userInput.noMeetingsMsg}
               />
-            </div>
+            {/* </div> */}
             <MeetingTime displayResults={this.state.userInput} />
           </div>
         </div>

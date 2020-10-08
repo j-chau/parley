@@ -12,6 +12,11 @@
   --okGreen:  #049904;
 }
 
+
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: var(--bodyFont);
   position: relative;
