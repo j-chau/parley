@@ -107,7 +107,7 @@ export default class UserInput extends Component {
 
     render() {
         return (
-            <form action="">
+            <form className="inputForm" action="">
 
                 <fieldset className="meetingStart">
                     <label htmlFor="initialMeetingTime">Meeting Start</label>

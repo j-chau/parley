@@ -72,7 +72,7 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValue
 
 const MeetingTime = (props) => {
     return (
-        <div className="grid-container">
+        <div className="gridContainer">
             <h3>Local time</h3>
             <h3>Suggestions</h3>
             {showResults(props.displayResults)}
