@@ -23,7 +23,7 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValue
     // if time has rolled into +/- 24 hrs, include +/- 1 day
     const x = suggestArr[0];
     let dayShiftSuggestArr = [0];
-    if (x !== 0) {
+    if (!x) {
         dayShiftSuggestArr = suggestArr.map(el => el - x);
     }
 
