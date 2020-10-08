@@ -17,7 +17,7 @@ export default class UserInput extends Component {
     }
 
     timeDropDownLoop = (start, end) => {
-        let meetingTimeArr = [<option value={""} key={0}> {""} </option>];
+        let meetingTimeArr = [<option value={""} key={start - 1} disabled> {""} </option>];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
@@ -34,7 +34,7 @@ export default class UserInput extends Component {
                 <option value={el} key={el}>{displayText + el}</option>
             )
         })
-        etcArr.unshift(<option value={""} key={etcArr.length} disabled defaultValue > {""} </option>);
+        etcArr.unshift(<option value={""} key="a" disabled> {""} </option>);
         return etcArr;
     }
 
@@ -79,7 +79,7 @@ export default class UserInput extends Component {
 
         if (e.target.value !== '') {
             this.setState({
-            timeZone: copyTimeZone
+                timeZone: copyTimeZone
             }, this.updateResults);
         }
     }
@@ -110,8 +110,8 @@ export default class UserInput extends Component {
             <form action="">
 
                 <fieldset className="meetingStart">
-                    <label htmlFor="">Meeting Start</label>
-                    <select value={this.state.initialTime} onChange={this.saveStartTime} name="" id="">
+                    <label htmlFor="initialMeetingTime">Meeting Start</label>
+                    <select value={this.state.initialTime} onChange={this.saveStartTime} name="selectMeetingTime" id="initialMeetingTime">
                         {this.timeDropDownLoop(8, 19)}
                     </select>
                 </fieldset>
