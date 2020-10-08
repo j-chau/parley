@@ -71,7 +71,10 @@ export default class App extends Component {
     let startTime = initialTime;
     // initial settings for validateTime()
     let copyTimeZoneCheck = [];
-    let copyStartTime = { location1: startTime };
+    let copyStartTime = {
+      location1: startTime,
+      dayShift1: 0
+    };
 
     this.validateTime(timeZoneArr, startTime, duration, copyTimeZoneCheck, copyStartTime);
     this.setState(prevState => ({
@@ -133,11 +136,12 @@ export default class App extends Component {
       // adjust for times that are outside 0-24
       if (adjustStartTime < 0) {
         adjustStartTime += 24;
-        //add -1d here
-      }
-      else if (adjustStartTime > 24) {
+        copyStartTime["dayShift" + (i + 1)] = -1;
+      } else if (adjustStartTime > 24) {
         adjustStartTime -= 24;
-        // add +1d here
+        copyStartTime["dayShift" + (i + 1)] = +1;
+      } else {
+        copyStartTime["dayShift" + (i + 1)] = 0;
       }
 
       let adjustEndTime = adjustStartTime + duration;
