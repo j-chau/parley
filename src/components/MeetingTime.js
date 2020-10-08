@@ -11,36 +11,44 @@ const buildDisplayArr = (timeZoneObj, displayArr, dayShiftArr) => {
 
 const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValues }) => {
 
+    // convert timeZone objects to arrays
     let displayStartArr = [];
     let dayShiftStartArr = [];
     buildDisplayArr(timeZone.startTime, displayStartArr, dayShiftStartArr);
 
     let displaySuggestArr = [];
-    let dayShiftSuggestArr = [];
-    buildDisplayArr(timeZone.suggestTime, displaySuggestArr, dayShiftSuggestArr);
+    let suggestArr = [];
+    buildDisplayArr(timeZone.suggestTime, displaySuggestArr, suggestArr);
 
     // if time has rolled into +/- 24 hrs, include +/- 1 day
-    const x = dayShiftSuggestArr[0];
+    const x = suggestArr[0];
+    let dayShiftSuggestArr = [0];
     if (x !== 0) {
-        dayShiftSuggestArr.forEach(el => el - x)
+        dayShiftSuggestArr = suggestArr.map(el => {
+            console.log("el - x = " + (el - x));
+            return el - x
+        })
     }
 
+    // if user selected meeting time does not work for every time zone, add class badTime; else add class goodTime
     let displayTime;
     return displayStartArr.map((el, index) => {
         if (timeZoneCheck[index]) displayTime = "goodTime";
         else displayTime = "badTime";
         const newTime = displaySuggestArr[index];
 
-        let dayShiftStart = dayShiftStartArr[index]
+        // add '+' to positive values
+        let dayShiftStart = dayShiftStartArr[index];
         if (dayShiftStart > 0) "+".concat(dayShiftStart)
 
-        let dayShiftSuggest = dayShiftSuggestArr[index]
+        let dayShiftSuggest = dayShiftSuggestArr[index];
         if (dayShiftSuggest > 0) "+".concat(dayShiftSuggest)
 
+        // construct string to display timezone format
         let displayGmt = "GMT ";
         const gmtInt = gmtValues[index];
         if (gmtInt >= 0) displayGmt += "+";
-
+        // only show timezones on screens smaller than 940px
         let mobileView = " srOnly";
         if (window.screen.width < 940) mobileView = ""
 
