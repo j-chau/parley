@@ -1,8 +1,8 @@
 .gridContainer {
   display: grid;
-  grid-template-rows: 98px;
+  grid-template-rows: 115px;
   grid-template-columns: 200px 200px;
-  grid-row-gap: 54px;
+  grid-row-gap: 77px;
   grid-auto-rows: 50px;
   border: 10px solid var(--turquoise);
   background-color: #ffffff;
