@@ -36,10 +36,10 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValue
 
         // add '+' to positive values
         let dayShiftStart = dayShiftStartArr[index];
-        if (dayShiftStart > 0) "+".concat(dayShiftStart)
+        if (dayShiftStart > 0) dayShiftStart = "+" + dayShiftStart
 
         let dayShiftSuggest = dayShiftSuggestArr[index];
-        if (dayShiftSuggest > 0) "+".concat(dayShiftSuggest)
+        if (dayShiftSuggest > 0) dayShiftSuggest = "+" + dayShiftSuggest
 
         // construct string to display timezone format
         let displayGmt = "GMT ";
