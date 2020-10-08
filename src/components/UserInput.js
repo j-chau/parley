@@ -79,7 +79,7 @@ export default class UserInput extends Component {
 
         if (e.target.value !== '') {
             this.setState({
-            timeZone: copyTimeZone
+                timeZone: copyTimeZone
             }, this.updateResults);
         }
     }

@@ -24,10 +24,7 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValue
     const x = suggestArr[0];
     let dayShiftSuggestArr = [0];
     if (x !== 0) {
-        dayShiftSuggestArr = suggestArr.map(el => {
-            console.log("el - x = " + (el - x));
-            return el - x
-        })
+        dayShiftSuggestArr = suggestArr.map(el => el - x);
     }
 
     // if user selected meeting time does not work for every time zone, add class badTime; else add class goodTime
@@ -59,13 +56,13 @@ const showResults = ({ duration, timeZone, timeZoneCheck, meetingFound, gmtValue
                 {/* display meeting times with user selected time */}
                 <p className={displayTime}>
                     {`${el} - ${el + duration}`}
-                    <span>{dayShiftStart !== 0 && (dayShiftStart + " day")}</span>
+                    {dayShiftStart !== 0 && (<span className="dayShift">{dayShiftStart + " day"}</span>)}
                 </p>
 
                 {meetingFound === true
                     // display suggested meeting times
                     ? <p>{`${newTime} - ${newTime + duration}`}
-                        <span>{dayShiftSuggest !== 0 && (dayShiftSuggest + " day")}</span>
+                        {dayShiftSuggest !== 0 && (<span className="dayShift">{dayShiftSuggest + " day"}</span>)}
                     </p>
                     : <p>None</p>}
             </Fragment>
