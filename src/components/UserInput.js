@@ -8,7 +8,7 @@ export default class UserInput extends Component {
     constructor() {
         super();
         this.state = {
-            initialTime: 0,
+            initialTime: 8,
             duration: 1,
             timeZone: {},
             numLocation: 1,
@@ -17,11 +17,11 @@ export default class UserInput extends Component {
     }
 
     timeDropDownLoop = (start, end) => {
-        let meetingTimeArr = [<option value={""} key={start - 1} disabled> {""} </option>];
+        let meetingTimeArr = [];
         for (let i = start; i < end; i++) {
             let time = i;
             if (start === 8 && time > 12) time -= 12;
-            meetingTimeArr.push(<option value={i} key={i}> {time} </option>)
+            meetingTimeArr.push(<option value={i} key={i}> {time}:00</option>)
         }
         return meetingTimeArr;
     }
