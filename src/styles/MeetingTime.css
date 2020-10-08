@@ -17,6 +17,14 @@
 
 h3 {
   margin-top: 27px;
+  font-size: 1.4rem;
+}
+
+.gmtGridItem {
+  grid-column: span 2;
+  background-color: #fff;
+  padding: 0 0 7px;
+  align-self: end;
 }
 
 .goodTime {

@@ -21,7 +21,8 @@ export default class App extends Component {
           startTime: {},
           suggestTime: {}
         },
-        timeZoneCheck: []
+        timeZoneCheck: [],
+        gmtValues: []
       }
     }
   }
@@ -84,7 +85,8 @@ export default class App extends Component {
           startTime: copyStartTime,
           suggestTime: copyStartTime
         },
-        timeZoneCheck: copyTimeZoneCheck
+        timeZoneCheck: copyTimeZoneCheck,
+        gmtValues: timeZoneObj
       }
     }))
 
