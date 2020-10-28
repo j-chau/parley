@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/parley/static/css/main.e32bb763.chunk.css",
-    "main.js": "/parley/static/js/main.55bb8bc6.chunk.js",
-    "main.js.map": "/parley/static/js/main.55bb8bc6.chunk.js.map",
+    "main.css": "/parley/static/css/main.412ba263.chunk.css",
+    "main.js": "/parley/static/js/main.f08ec038.chunk.js",
+    "main.js.map": "/parley/static/js/main.f08ec038.chunk.js.map",
     "runtime-main.js": "/parley/static/js/runtime-main.af819eb9.js",
     "runtime-main.js.map": "/parley/static/js/runtime-main.af819eb9.js.map",
     "static/js/2.fb93cd31.chunk.js": "/parley/static/js/2.fb93cd31.chunk.js",
     "static/js/2.fb93cd31.chunk.js.map": "/parley/static/js/2.fb93cd31.chunk.js.map",
     "index.html": "/parley/index.html",
-    "precache-manifest.93f087dcad28078664fd7f61045bbba3.js": "/parley/precache-manifest.93f087dcad28078664fd7f61045bbba3.js",
+    "precache-manifest.a72472bb465dcf4f6ebc6789084917d6.js": "/parley/precache-manifest.a72472bb465dcf4f6ebc6789084917d6.js",
     "service-worker.js": "/parley/service-worker.js",
-    "static/css/main.e32bb763.chunk.css.map": "/parley/static/css/main.e32bb763.chunk.css.map",
+    "static/css/main.412ba263.chunk.css.map": "/parley/static/css/main.412ba263.chunk.css.map",
     "static/js/2.fb93cd31.chunk.js.LICENSE.txt": "/parley/static/js/2.fb93cd31.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.af819eb9.js",
     "static/js/2.fb93cd31.chunk.js",
-    "static/css/main.e32bb763.chunk.css",
-    "static/js/main.55bb8bc6.chunk.js"
+    "static/css/main.412ba263.chunk.css",
+    "static/js/main.f08ec038.chunk.js"
   ]
 }
