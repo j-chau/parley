@@ -163,16 +163,19 @@ export default class App extends Component {
       <>
         <div className="wrapper">
           <header>
-            <h1>What time is it?</h1>
+            <h1>
+              <p>Parley</p>
+              <p className="tagline">Time Zone Converter</p>
+            </h1>
           </header>
           <div className="flex">
             {/* <div> */}
-              <UserInput
-                etcList={this.state.etcList}
-                getUserInput={this.getUserInput}
-                meetingFound={this.state.userInput.meetingFound}
-                meetingMsg={this.state.userInput.noMeetingsMsg}
-              />
+            <UserInput
+              etcList={this.state.etcList}
+              getUserInput={this.getUserInput}
+              meetingFound={this.state.userInput.meetingFound}
+              meetingMsg={this.state.userInput.noMeetingsMsg}
+            />
             {/* </div> */}
             <MeetingTime displayResults={this.state.userInput} />
           </div>
