@@ -1,73 +1,15 @@
-:root {
-
-  /* FONTS */
-  --headerFont: 'Maitree', serif;
-  --bodyFont: 'Montserrat', sans-serif;
-
-  /* COLOUR */
-  --lightBlue: #5da9c2;
-  --darkBlue: #261870;
-  --turquoise: #ace8cd;
-  --errRed: #c00000;
-  --okGreen:  #049904;
-}
-
-html { font-size: 62.5%}
-
-body {
-  font-family: var(--bodyFont);
-  font-size: 2rem;
-  position: relative;
-  min-height: 100vh;
-  padding-top: 30px;
-}
-
-h1, h3 {
-  font-family: var(--headerFont);
-}
-
-.wrapper {
-  max-width: 940px;
-  margin: 0 auto;
-  width: 90%;
-  padding-bottom: 50px;
-}
-
-h1 {
- font-size: 2em;
- margin-bottom: 100px;
- display: flex;
- justify-content: space-between;
- align-items: flex-end;
- border-bottom: 10px solid var(--turquoise);
- padding-bottom: 10px;
-}
-h1 p {
-   background-color: white;
-   padding: 0;
-}
-.tagline {
-  font-size: 0.5em;
-}
-
-.flex {
-  display:flex;
-  justify-content: space-between;
-}
- 
-footer {
-  position: absolute;
-  bottom: 0;
-  height: 50px;
+header, footer {
   width: 100%;
-}
-
-footer p {
-  background-color:lightBlue;
-  padding: 7px;
+  background-color: #c4c4c4;
   text-align: center;
 }
-
-footer p a:hover {
-  color: var(--darkBlue);
+header h1 {
+  display: flex;
+  justify-content: space-between;
+}
+.intro {
+  display: flex;
+}
+.intro-text {
+  width: 40%;
 }

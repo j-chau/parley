@@ -1,42 +1,11 @@
-.gridContainer {
-  display: grid;
-  grid-template-rows: 115px;
-  grid-template-columns: 200px 200px;
-  grid-row-gap: 77px;
-  grid-auto-rows: 50px;
-  border: 10px solid var(--turquoise);
-  background-color: #ffffff;
-  padding-bottom: 10px;
-  align-items: center;
-  text-align: center;
-}
-
-.gridContainer p {
-  margin: 0 10px;
-}
-
-h3 {
-  margin-top: 27px;
-  font-size: 1.4em;
-}
-
-.gmtGridItem {
-  grid-column: span 2;
-  background-color: #fff;
-  padding: 0 0 7px;
-  align-self: end;
-}
-
-.dayShift {
-  padding-left: 1.4em;
-  width: min-content;
-  font-size: 0.6em;
-}
-
-.goodTime {
-  color: var(--okGreen);
-}
-
-.badTime {
-  color: var(--errRed);
+.show-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin: 3em auto;
+    padding: 0 1em;
+    border: 1px solid grey;
+    border-radius: 10px;
+    text-align: right;
 }
